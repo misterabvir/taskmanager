@@ -2,6 +2,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddSingleton<DAL.Base.IRepository>(new DAL.Base.MySqlRepository() 
+    {ConnectionString = builder.Configuration.GetConnectionString("Default") ??
+        throw new Exception("not found conection string in configuration")});
+
+builder.Services.AddSingleton<DAL.IProjectDAL, DAL.ProjectDAL>();
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
