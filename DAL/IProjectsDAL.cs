@@ -18,4 +18,5 @@ public interface IProjectsDAL
     
     /// <summary> get row by id from `Project` table </summary>
     Task<ProjectModel> GetById(Guid id);
+    Task<ProjectModel> GetByName(string name);
 }

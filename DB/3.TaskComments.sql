@@ -8,9 +8,3 @@ CREATE TABLE TaskComments(
 	CommentType int,
 	Content TEXT
 );
-
-UPDATE Project SET 
-                ProjectName = @ProjectName,  
-                CreateDate = @CreateDate, 
-                UpdateDate = @UpdateDate
-              WHERE Id=@Id;

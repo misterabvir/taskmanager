@@ -28,6 +28,12 @@ public class ProjectsDAL : IProjectsDAL
     {
         return await repository.QuerySingleOrDefaultAsync<ProjectModel>(SQL.Project.GetById, new { Id = id });
     }
+
+    public async Task<ProjectModel> GetByName(string projectName)
+    {
+        return await repository.QuerySingleOrDefaultAsync<ProjectModel>(SQL.Project.GetByName, new { ProjectName = projectName });
+    }
+
     public async Task Update(ProjectModel model)
     {
         await repository.ExecuteAsync(SQL.Project.Update, model);

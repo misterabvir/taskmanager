@@ -16,6 +16,7 @@ internal static class SQL
               WHERE Id=@Id;";
         public static string GetAll => @"SELECT * FROM Project";
         public static string GetById => @"SELECT * FROM Project WHERE Id=@Id";
+        public static string GetByName => @"SELECT * FROM Project WHERE ProjectName=@ProjectName";
     }
 
     /// <summary> queries for `Task` table </summary>
