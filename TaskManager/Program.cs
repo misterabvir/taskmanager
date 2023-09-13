@@ -6,7 +6,9 @@ builder.Services.AddSingleton<DAL.Base.IRepository>(new DAL.Base.MySqlRepository
     {ConnectionString = builder.Configuration.GetConnectionString("Default") ??
         throw new Exception("not found conection string in configuration")});
 
-builder.Services.AddSingleton<DAL.IProjectDAL, DAL.ProjectDAL>();
+builder.Services.AddSingleton<DAL.IProjectsDAL, DAL.ProjectsDAL>();
+
+builder.Services.AddSingleton<BL.IProjects, BL.Projects>();
 
 var app = builder.Build();
 

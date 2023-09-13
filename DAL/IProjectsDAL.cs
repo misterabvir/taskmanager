@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DAL;
 
-public interface IProjectDAL
+public interface IProjectsDAL
 {
     /// <summary> create new row in `Project` table </summary>
     Task Create(ProjectModel model);

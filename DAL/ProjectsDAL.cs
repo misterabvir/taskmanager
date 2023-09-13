@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace DAL;
 
-public class ProjectDAL : IProjectDAL
+public class ProjectsDAL : IProjectsDAL
 {
     private readonly IRepository repository;
-    public ProjectDAL(IRepository repository)
+    public ProjectsDAL(IRepository repository)
     {
         this.repository = repository;
     }
