@@ -9,9 +9,9 @@ export default class TaskAction extends Component {
 
     render() {
         let content = 
-            this.props.status == 'canceled' ? 
-            <p>Ended</p> : 
-            this.props.status == 'started'? 
+            this.props.status === 'canceled' ? 
+            <p></p> : 
+            this.props.status === 'started'? 
             <button className="btn btn-danger" onClick={()=>{this.props.cancelAction(this.props.value)}}>Cancel</button> :
             <button className="btn btn-primary" onClick={()=>{this.props.startAction(this.props.value)}}>Start</button>;
         

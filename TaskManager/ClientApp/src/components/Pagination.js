@@ -6,7 +6,7 @@ export default class Pagination extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { currentPage: 1, itemsPerPage: 2 };
+        this.state = { currentPage: 1, itemsPerPage: 3 };
         this.pageClick = this.pageClick.bind(this);
     }
 
@@ -43,7 +43,12 @@ export default class Pagination extends Component {
                     </thead>
                     <tbody>
                         {
-                            currentItems.map((task, index) => <TaskItem key={task.id} item={task} index={index - 2 + (this.state.itemsPerPage) * this.state.currentPage} reload={this.props.reload} />)
+                            currentItems.map((task, index) => 
+                                <TaskItem 
+                                    key={task.id} 
+                                    item={task} 
+                                    index={index - this.state.itemsPerPage + (this.state.itemsPerPage) * this.state.currentPage} 
+                                    reload={this.props.reload} />)
                         }
                     </tbody>
                 </table>
@@ -51,8 +56,8 @@ export default class Pagination extends Component {
                     {pageNumbers.map((number) => (
                         <li
                             key={number}
-                            className={number === currentPage ? 'active page-item' : 'page-item'}>
-                            <a href="#" className="page-link" id={number} onClick={this.pageClick}>{number}</a>
+                            className={number === currentPage ? 'active page-item user-select-none' : 'page-item user-select-none'}>
+                            <a className="page-link" id={number} onClick={this.pageClick}>{number}</a>
                         </li>
                     ))}
                 </ul>

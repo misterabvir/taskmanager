@@ -8,6 +8,7 @@ public class ProjectsViewModel
     public string? ProjectName { get; set; }
     public DateTime? CreateDate { get; set; }
     public DateTime? UpdateDate { get; set; }
+    public IEnumerable<TaskViewModel>? Tasks { get; set; }
 }
 
 public class ProjectsListViewModel

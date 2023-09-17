@@ -13,11 +13,12 @@ public class Tasks: ITasks
         this.tasksDAL = tasksDAL;
     }
 
-    public async Task<TaskModel?> Create(string taskName, string projectName)
+    public async Task<TaskModel?> Create(string taskName, Guid projectId)
     {
-        ProjectModel project = await projects.GetByName(projectName);
+        ProjectModel project = await projects.GetById(projectId);
         TaskModel model = new TaskModel() {
             Id = Guid.NewGuid(),
+            TaskName = taskName,
             ProjectId = project.Id,
             CreateDate = DateTime.UtcNow
         };
@@ -53,6 +54,7 @@ public class Tasks: ITasks
         TaskModel model = await tasksDAL.GetById(taskId);
         model.TaskName = taskName;
         model.UpdateDate = DateTime.UtcNow;
+        await tasksDAL.Update(model);
         await projects.Update(model.ProjectId);
         return model;
     }

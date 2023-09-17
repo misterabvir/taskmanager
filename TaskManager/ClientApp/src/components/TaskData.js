@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ProjectList from './ProjectList';
 import Pagination from './Pagination';
-import TaskItem from './TaskItem';
 
 
 export class TaskData extends Component {
