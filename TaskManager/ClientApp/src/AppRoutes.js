@@ -1,20 +1,26 @@
 import { TaskData } from "./components/TaskData";
-import { ProjectDetail } from "./components/ProjectDetail";
-import { TaskDetail } from "./components/TaskDetail";
+import { ProjectDetailWrapper } from "./components/ProjectDetailWrapper";
+import { TaskDetailWrapper } from "./components/TaskDetailWrapper";
+import { NotFound } from "./components/NotFound";
 
 const AppRoutes = [
   {
-    index: true,
     path: "/",
-    element: <TaskData />
+    component: {TaskData},
+    element: <TaskData/>
   },
   {
     path: "/project-detail/:id",
-    element: <ProjectDetail />
+    element: <ProjectDetailWrapper/>,
   },
   {
     path: "/task-detail/:id",
-    element: <TaskDetail />
+    element: <TaskDetailWrapper/>,
+    
+  },
+  {
+    path: "*",
+    element: <NotFound/>,    
   }
 ];
 

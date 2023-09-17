@@ -29,7 +29,7 @@ export default class ProjectList extends Component {
 
   renderProjectList(projects) {
     let selected = this.state.selected; 
-    let link = "/detail/" + selected;
+    let link = "/project-detail/" + selected;
     let project = this.state.projects.find(item => item.id === selected);
     let content =  project ? <h4>For project  <Link className='text-dark' to={link}>{project.projectName}</Link></h4> : <h4>For all projects</h4>;
     return (

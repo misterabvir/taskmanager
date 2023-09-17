@@ -40,7 +40,7 @@ namespace TaskManager.Controllers
 
         [HttpPost]
         [Route("/projectDetail")]
-        public async Task<ProjectsViewModel> GetProjectDetail(ProjectDetailModel model)
+        public async Task<ProjectViewModel> GetProjectDetail(ProjectDetailModel model)
         {
             var project = await projects.GetById(model.id);
             var projectasks = await tasks.GetByProjectId(model.id);

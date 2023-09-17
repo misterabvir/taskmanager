@@ -13,13 +13,13 @@ public class Comments : IComments
         this.commentsDAL = commentsDAL;
     }
 
-    public async Task<CommentModel> Create(Guid taskId, int commentType, string content)
+    public async Task<CommentModel> Create(Guid taskId, string content)
     {
         CommentModel model = new CommentModel()
         {
             Id = Guid.NewGuid(),
             TaskId = taskId,
-            CommentType = commentType,
+            Created = DateTime.UtcNow,
             Content = content
         };
 

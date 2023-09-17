@@ -21,7 +21,7 @@ public class CommentsDAL : ICommentsDAL
 
     public async Task<IEnumerable<CommentModel>> GetByTaskId(Guid taskId)
     {
-        return await repository.QueryAsync<CommentModel>(SQL.Comments.GetById, new { TaskId = taskId });
+        return await repository.QueryAsync<CommentModel>(SQL.Comments.GetByTaskId, new { TaskId = taskId });
     }
 
 }

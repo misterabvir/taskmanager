@@ -36,7 +36,7 @@ export default class TaskItem extends Component {
         <td><Link className='text-dark' to={linkProject}>{task.projectName}</Link></td>
         <td>
           <div className="row">
-            <div className="col-auto"><Link className='text-dark' to={linkTask}>Detail:</Link>  </div>
+            <div className="col-auto"><Link className='text-dark' to={linkTask} >Detail:</Link>  </div>
             <div className="col"><EditableField data={task.taskName} save={(value) => this.saveTaskName(value, task.id)} /></div>
                   
             

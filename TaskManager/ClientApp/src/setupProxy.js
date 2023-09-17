@@ -15,6 +15,8 @@ const context = [
   "/saveProject",
   "/createTask",
   "/getTask",
+  "/getComments",
+  "/createComment",
 ];
 
 const onError = (err, req, resp, target) => {

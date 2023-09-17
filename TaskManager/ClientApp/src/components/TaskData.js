@@ -20,7 +20,7 @@ export class TaskData extends Component {
         this.getTaskData();
     }
 
-    renderTaskTable(tasks) {
+    renderTaskTable() {
         return (
             <div>
                 <ProjectList selectedChange={this.selectedChange} />
@@ -32,7 +32,7 @@ export class TaskData extends Component {
     render() {
         let contents = this.state.loading
             ? <p><em>Loading...</em></p>
-            : this.renderTaskTable(this.state.filteredTasks);
+            : this.renderTaskTable();
 
         return (
             <div>

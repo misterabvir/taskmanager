@@ -14,9 +14,9 @@ public static class ProjectsMapper
         };
     }
 
-    public static ProjectsViewModel MapProjectModelToProjectViewModel(ProjectModel model, IEnumerable<TaskViewModel> tasks)
+    public static ProjectViewModel MapProjectModelToProjectViewModel(ProjectModel model, IEnumerable<TaskViewModel> tasks)
     {
-        return new ProjectsViewModel()
+        return new ProjectViewModel()
         {
             Id = model.Id,
             ProjectName = model.ProjectName,

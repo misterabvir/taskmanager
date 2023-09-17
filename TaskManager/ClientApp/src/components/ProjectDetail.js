@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Pagination from './Pagination';
 import EditableField from './EditableField';
+import { NotFound } from './NotFound';
 
 export class ProjectDetail extends Component {
   static displayName = ProjectDetail.name;
@@ -8,7 +9,7 @@ export class ProjectDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: window.location.href.split("/").pop(),
+      id: this.props.data,
       project: null,
       loading: true,
       creation: ""
@@ -30,11 +31,15 @@ export class ProjectDetail extends Component {
   }
 
   renderProject() {
-    let project = this.state.project;
+    const project = this.state.project;
+    if(!project){
+      return(<NotFound/>);
+    }
+
     const tasks = project.tasks;
     return (
       <div>
-        <a href="\" className='btn btn-light'>
+        <a href="\" className='btn btn-link'>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="24" fill="currentColor" className="bi bi-arrow-return-left" viewBox="0 0 16 16">
             <path fillRule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z" />
           </svg>
@@ -155,7 +160,13 @@ export class ProjectDetail extends Component {
         Id: this.state.id
       })
     });
-    const data = await response.json();
-    this.setState({ project: data, loading: false });
+
+    if(response.ok){   
+      const data = await response.json();
+      this.setState({ project: data, loading: false });
+    }
+    else{
+      this.setState({ project: null, loading: false });
+    }
   }
 }

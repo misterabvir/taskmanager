@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import EditableField from './EditableField';
 import TaskAction from './TaskAction';
+import TaskComments from './TaskComments';
+import { NotFound } from './NotFound';
 
 export class TaskDetail extends Component {
   static displayName = TaskDetail.name;
 
-  componentDidMount = () => {
-    this.getTaskDetail();
-  }
-
   constructor(props) {
     super(props);
+    
     this.state = {
-      id: window.location.href.split("/").pop(),
+      id: this.props.data,
       task: null,
       loading: true
     };
@@ -20,6 +19,15 @@ export class TaskDetail extends Component {
     this.startAction = this.startAction.bind(this);
     this.cancelTask = this.cancelTask.bind(this);
     this.startTask = this.startTask.bind(this);
+    this.reload = this.reload.bind(this);
+  }
+
+  reload(){
+    this.getTaskDetail();
+  }
+
+  componentDidMount = () => {
+    this.getTaskDetail();
   }
 
   cancelAction(value) {
@@ -32,10 +40,13 @@ export class TaskDetail extends Component {
 
   renderTask() {
     const task = this.state.task;
+    if(!task){
+      return(<NotFound/>);
+    }
     return (
       <div>
         <div>
-        <div className="row">
+          <div className="row">
             <div className="col-auto"><h3>Project:</h3>  </div>
             <div className="col"><h3>{task.projectName}</h3></div>
           </div>
@@ -44,7 +55,7 @@ export class TaskDetail extends Component {
             <div className="col"><h3><EditableField data={task.taskName} save={(value) => this.saveTaskName(value, task.id)} /></h3></div>
           </div>
         </div>
-        <table className="table w-25">
+        <table className="table">
           <thead>
             <tr>
               <th className="w-25">Detail</th>
@@ -82,6 +93,7 @@ export class TaskDetail extends Component {
             </tr>
           </tbody>
         </table>
+        <TaskComments taskId={task.id} reload={this.reload}/>
       </div>
 
     );
@@ -118,8 +130,14 @@ export class TaskDetail extends Component {
         Id: this.state.id
       })
     });
-    const data = await response.json();
-    this.setState({ task: data, loading: false });
+    
+    if(response.ok){   
+      const data = await response.json();
+      this.setState({ task: data, loading: false });
+    }
+    else{
+      this.setState({ task: null, loading: false });
+    }
   }
   async startTask(id) {
     this.setState({ tasks: null, filteredTasks: null, loading: true });

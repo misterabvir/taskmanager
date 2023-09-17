@@ -43,12 +43,12 @@ internal static class SQL
     internal static class Comments
     {
         public static string Create =>
-            @"INSERT INTO TaskComments(Id,TaskId,CommentType, Content) 
-              VALUES(@Id, @TaskId, @CommentType, @Content)";
+            @"INSERT INTO TaskComments(Id,TaskId, Created, Content) 
+              VALUES(@Id, @TaskId, @Created, @Content)";
         public static string Update =>
             @"UPDATE Project 
               SET TaskId = @TaskId, 
-                  CommentType = @CommentType, 
+                  Created = @Created, 
                   Content = @Content 
               WHERE Id = @Id";
 
