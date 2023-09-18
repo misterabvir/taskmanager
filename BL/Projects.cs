@@ -11,15 +11,13 @@ public class Projects : IProjects
         this.projectDAL = projectDAL;
     }
 
-
-
     public async Task<ProjectModel> Create(string projectName)
     {
         ProjectModel model = new()
         {
             Id = Guid.NewGuid(),
             ProjectName = projectName,
-            CreateDate = DateTime.UtcNow,
+            CreateDate = DateTime.Now,
         };
         await projectDAL.Create(model);
         return model;
@@ -29,7 +27,7 @@ public class Projects : IProjects
         ProjectModel model = await projectDAL.GetById(projectId);
         if (model == null) throw new Exception("project has been not exixts");
         if (projectName != null) model.ProjectName = projectName;
-        model.UpdateDate = DateTime.UtcNow;
+        model.UpdateDate = DateTime.Now;
         await projectDAL.Update(model);
         return model;
     }

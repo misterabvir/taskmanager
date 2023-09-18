@@ -9,7 +9,6 @@ export class TaskDetail extends Component {
 
   constructor(props) {
     super(props);
-    
     this.state = {
       id: this.props.data,
       task: null,
@@ -22,7 +21,7 @@ export class TaskDetail extends Component {
     this.reload = this.reload.bind(this);
   }
 
-  reload(){
+  reload() {
     this.getTaskDetail();
   }
 
@@ -40,69 +39,42 @@ export class TaskDetail extends Component {
 
   renderTask() {
     const task = this.state.task;
-    if(!task){
-      return(<NotFound/>);
+    if (!task) {
+      return (<NotFound />);
     }
     return (
       <div>
-        <div>
-          <div className="row">
-            <div className="col-auto"><h3>Project:</h3>  </div>
-            <div className="col"><h3>{task.projectName}</h3></div>
-          </div>
-          <div className="row">
-            <div className="col-auto"><h3>Task Name:</h3>  </div>
-            <div className="col"><h3><EditableField data={task.taskName} save={(value) => this.saveTaskName(value, task.id)} /></h3></div>
-          </div>
+        <figure>
+          <blockquote className="blockquote">
+            <h4>Project Name: {task.projectName}</h4>
+            <h4>Task Name:
+              <EditableField
+                data={task.taskName}
+                save={(value) => this.saveTaskName(value, task.id)} />
+            </h4>
+          </blockquote>
+          <figcaption class="figure-caption">
+            <span>Created: <cite>{task.createDateFormat}</cite></span> <br />
+            <span>Started: <cite>{task.startDateFormat}</cite></span> <br />
+            <span>Updated: <cite>{task.updateDateFormat}</cite></span> <br />
+            <span>Canceled:<cite>{task.cancelDateFormat}</cite></span> <br />
+            <span>In work: <cite>{task.inWork}</cite></span> <br />
+            <span>Status:  <cite>{task.state}</cite></span>
+          </figcaption>
+        </figure>
+        <div className='row'>
+          <TaskAction status={task.state} cancelAction={this.cancelAction} startAction={this.startAction} value={task.id} />
         </div>
-        <table className="table">
-          <thead>
-            <tr>
-              <th className="w-25">Detail</th>
-              <th>Result</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Created</td>
-              <td>{task.createDate}</td>
-            </tr>
-            <tr>
-              <td>Started</td>
-              <td>{task.startDate}</td>
-            </tr>
-            <tr>
-              <td>Updated</td>
-              <td>{task.updateDate}</td>
-            </tr>
-            <tr>
-              <td>Canceled</td>
-              <td>{task.cancelDate}</td>
-            </tr>
-            <tr>
-              <td>In work</td>
-              <td>{task.inWork}</td>
-            </tr>
-            <tr>
-              <td>Status</td>
-              <td>{task.state}</td>
-            </tr>
-            <tr>
-              <td>Action</td>
-              <td><TaskAction status={task.state} cancelAction={this.cancelAction} startAction={this.startAction} value={task.id} /></td>
-            </tr>
-          </tbody>
-        </table>
-        <TaskComments taskId={task.id} reload={this.reload}/>
+        <TaskComments taskId={task.id} reload={this.reload} />
       </div>
 
     );
   }
 
-
   render() {
-    let content = this.state.loading ? <p><em>Loading...</em></p> : this.renderTask();
-
+    let content = this.state.loading ?
+      <p><em>Loading...</em></p> :
+      this.renderTask();
     return (
       <div>{content}</div>
     );
@@ -130,12 +102,12 @@ export class TaskDetail extends Component {
         Id: this.state.id
       })
     });
-    
-    if(response.ok){   
+
+    if (response.ok) {
       const data = await response.json();
       this.setState({ task: data, loading: false });
     }
-    else{
+    else {
       this.setState({ task: null, loading: false });
     }
   }

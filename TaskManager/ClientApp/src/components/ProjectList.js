@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default class ProjectList extends Component {
   static displayName = 'ProjectList';
@@ -7,65 +7,65 @@ export default class ProjectList extends Component {
   constructor(props) {
     super(props);
     this.state = { projects: [], loading: true, creation: "", selected: null };
-    this.onCreate = this.onCreate.bind(this);
+    this.handleCreate = this.handleCreate.bind(this);
   }
 
   componentDidMount = () => {
     this.getProjectsListData();
   }
 
-  onSelected(value) {
+  handleSelected(value) {
     this.setState({ selected: value });
     this.props.selectedChange(value);
   }
 
-  onCreation(value) {
+  handleNewProjectNameInput(value) {
     this.setState({ creation: value });
   }
 
-  onCreate() {
+  handleCreate() {
     this.createProject(this.state.creation);
   }
 
   renderProjectList(projects) {
-    let selected = this.state.selected; 
+    let selected = this.state.selected;
     let link = "/project-detail/" + selected;
     let project = this.state.projects.find(item => item.id === selected);
-    let content =  project ? <h4>For project  <Link className='text-dark' to={link}>{project.projectName}</Link></h4> : <h4>For all projects</h4>;
+    let content = project ? 
+      <h4> For project  <Link className='text-dark' to={link}>{project.projectName}</Link></h4> : 
+      <h4>For all projects</h4>;
+    
     return (
       <div>
         <div className="row">
           {content}
         </div>
         <div className="row">
-          <div className="col-5">
-            <label htmlFor="project-select">Choose project</label>
+          <div className="col-auto">
             <select
               id="project-select"
               className="form-select"
-              onChange={(e) => { this.onSelected(e.target.value) }}>
+              onChange={(e) => { this.handleSelected(e.target.value) }}>
               <option key="0"
                 value="none">
                 not selected
               </option>
               {projects.map(project => <option key={project.id} value={project.id}> {project.projectName} </option>)}
             </select>
-
           </div>
-          <div className="col-3">
-            <label htmlFor="project-new-name">Create Project</label>
+          <div className="col-auto">
             <input
               type='text'
               id="project-new-name"
               className="form-control"
               placeholder="create new project"
-              onChange={(e) => { this.onCreation(e.target.value) }}
+              onChange={(e) => { this.handleNewProjectNameInput(e.target.value) }}
               value={this.state.creation} />
           </div>
           <div className="col-auto">
             <button
-              className="btn btn-primary mt-4"
-              onClick={this.onCreate}>
+              className="btn btn-primary "
+              onClick={this.handleCreate}>
               Create
             </button>
           </div>

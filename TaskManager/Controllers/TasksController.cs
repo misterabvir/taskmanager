@@ -1,6 +1,5 @@
 ﻿using BL;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using TaskManager.Mappers;
 using TaskManager.ViewModels;
 using TaskManager.ViewModels.PostRequestModel;
@@ -29,7 +28,7 @@ public class TasksController : ControllerBase
             TaskMapper.MapTaskModelToTaskViewModel(
                 task, 
                 projectList.First(project => project.Id == task.ProjectId)!.ProjectName!));
-        return taskvm;
+        return taskvm.OrderByDescending(item=>item.UpdateDate);
     }
     [HttpPost]
     [Route("/getTask")]
@@ -45,8 +44,7 @@ public class TasksController : ControllerBase
     [Route("/startTask")]
     public async Task<IActionResult> StartTask(ActionTaskModel model)
     {
-        await tasks.Start(model.Id);
-        
+        await tasks.Start(model.Id);       
         return Ok();
     }
 

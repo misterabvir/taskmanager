@@ -20,31 +20,33 @@ public class Tasks: ITasks
             Id = Guid.NewGuid(),
             TaskName = taskName,
             ProjectId = project.Id,
-            CreateDate = DateTime.UtcNow
+            CreateDate = DateTime.Now
         };
         await projects.Update(project.Id);
         await tasksDAL.Create(model);
         return model;
     }
+
     public async Task<TaskModel> Start(Guid taskId)
     {
         TaskModel model = await tasksDAL.GetById(taskId);
         if (model.StartDate == null)
         {
-            model.StartDate = DateTime.UtcNow;
-            model.UpdateDate = DateTime.UtcNow;
+            model.StartDate = DateTime.Now;
+            model.UpdateDate = DateTime.Now;
             await tasksDAL.Update(model);
             await projects.Update(model.ProjectId);
         }
         return model;
     }
+
     public async Task<TaskModel> Cancel(Guid taskId)
     {
         TaskModel model = await tasksDAL.GetById(taskId);
         if (model.StartDate != null && model.CancelDate == null)
         {
-            model.CancelDate = DateTime.UtcNow;
-            model.UpdateDate = DateTime.UtcNow;
+            model.CancelDate = DateTime.Now;
+            model.UpdateDate = DateTime.Now;
             await tasksDAL.Update(model);
         }
         return model;
@@ -53,21 +55,24 @@ public class Tasks: ITasks
     {
         TaskModel model = await tasksDAL.GetById(taskId);
         model.TaskName = taskName;
-        model.UpdateDate = DateTime.UtcNow;
+        model.UpdateDate = DateTime.Now;
         await tasksDAL.Update(model);
         await projects.Update(model.ProjectId);
         return model;
     }
+
     public async Task<IEnumerable<TaskModel>> GetAll()
     {
         return await tasksDAL.GetAll();
     }
+
     public async Task<IEnumerable<TaskModel>> GetByProjectName(string projectName)
     {
         ProjectModel project = await projects.GetByName(projectName);
         if (project == null) return Enumerable.Empty<TaskModel>();
         return await GetByProjectId(project.Id);
     }
+
     public async Task<IEnumerable<TaskModel>> GetByProjectId(Guid projectId)
     {
         return await tasksDAL.GetByProjectId(projectId);

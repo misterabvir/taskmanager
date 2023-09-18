@@ -1,10 +1,9 @@
-﻿using Org.BouncyCastle.Asn1.Crmf;
+﻿using TaskManager.ViewModels.Utils;
 
 namespace TaskManager.ViewModels;
 
 public class TaskViewModel
 {
-    public int Index { get; set; } = 0;
     public Guid Id { get; set; }
     public string? TaskName { get; set; }
     public Guid ProjectId { get; set; }
@@ -17,20 +16,15 @@ public class TaskViewModel
     public string State
     {
         get {
-            if (CancelDate != null) return "canceled";
-            if (StartDate != null) return "started";
-            return "created";
+            if (CancelDate != null) return Utils.State.canceled.ToString();
+            if (StartDate != null) return Utils.State.started.ToString();
+            return Utils.State.created.ToString();
         }
     }
 
-    public string InWork
-    {
-        get
-        {
-            if (StartDate == null) return "00:00";
-            if (CancelDate == null) return (DateTime.UtcNow - StartDate).Value.ToString(@"hh\:mm");
-            else return (CancelDate - StartDate).Value.ToString(@"hh\:mm");
-        }
-    }
-   
+    public string InWork => StartDate.HowLong(CancelDate);
+    public string CreateDateFormat => CreateDate.GetFormatString();
+    public string StartDateFormat => StartDate.GetFormatString();
+    public string CancelDateFormat => CancelDate.GetFormatString();
+    public string UpdateDateFormat => UpdateDate.GetFormatString();
 }

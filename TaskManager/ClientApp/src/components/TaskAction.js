@@ -1,22 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class TaskAction extends Component {
-    static displayName = TaskAction.name;
-    
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        let content = 
-            this.props.status === 'canceled' ? 
-            <p></p> : 
-            this.props.status === 'started'? 
-            <button className="btn btn-danger" onClick={()=>{this.props.cancelAction(this.props.value)}}>Cancel</button> :
-            <button className="btn btn-primary" onClick={()=>{this.props.startAction(this.props.value)}}>Start</button>;
-        
-        return (           
-            <div> {content}</div>           
-        );
-    }
+export default function TaskAction(props) {
+  const content =
+    props.status === 'canceled' ?
+      <button className="btn btn-secondary align-middle" disabled>completed</button> :
+      props.status === 'started' ?
+        <button className="btn btn-danger align-middle"
+          onClick={() => { props.cancelAction(props.value) }}>
+          Cancel
+        </button> :
+        <button className="btn btn-primary align-middle"
+          onClick={() => { props.startAction(props.value) }}>
+          Start
+        </button>;
+  return (
+    <span>{content}</span>
+  );
 }

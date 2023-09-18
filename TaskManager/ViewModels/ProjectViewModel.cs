@@ -1,4 +1,6 @@
-﻿namespace TaskManager.ViewModels;
+﻿using TaskManager.ViewModels.Utils;
+
+namespace TaskManager.ViewModels;
 
 public class ProjectViewModel
 {
@@ -7,4 +9,6 @@ public class ProjectViewModel
     public DateTime? CreateDate { get; set; }
     public DateTime? UpdateDate { get; set; }
     public IEnumerable<TaskViewModel>? Tasks { get; set; }
+    public string CreateDateFormat => CreateDate.GetFormatString();
+    public string UpdateDateFormat => UpdateDate.GetFormatString();
 }

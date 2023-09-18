@@ -6,55 +6,45 @@ export default class TaskComments extends Component {
   constructor(props) {
     super(props);
     this.state = { taskId: this.props.taskId, comments: null, loading: true, newComment: "" };
-    this.onChangeNewComment = this.onChangeNewComment.bind(this);
-    this.onCreateComment = this.onCreateComment.bind(this);  
-    this.createComment = this.createComment.bind(this);
+    this.handleChangeNewComment = this.handleChangeNewComment.bind(this);
+    this.handleCreateComment = this.handleCreateComment.bind(this);
   }
 
   componentDidMount = () => {
     this.getComments();
   }
 
-  onChangeNewComment(value) {
+  handleChangeNewComment(value) {
     this.setState({ newComment: value })
   }
-  onCreateComment() {
+
+  handleCreateComment() {
     this.createComment(this.state.newComment, this.state.taskId);
   }
 
   renderComments() {
     const comments = this.state.comments;
-
     return (
       <div className="container">
         <div className="row mb-5">
-
           <textarea
-            className="form-control mb-1"
+            className="form-control mb-1 mt-1"
             placeholder="Write comment"
-            onChange={(e) => { this.onChangeNewComment(e.target.value) }}
+            onChange={(e) => { this.handleChangeNewComment(e.target.value) }}
             value={this.state.newComment} />
-
           <button
             className="btn btn-primary"
-            onClick={this.onCreateComment}>
+            onClick={this.handleCreateComment}>
             Create
           </button>
-
         </div>
         <div className='row'>{
           comments.map(comment =>
-            <div key={comment.id} className="card border-light mb-3 row">
-              <div className="card-header small text-dark opacity-75">#{comment.id}</div>
-              <div className="card-body row">
-                <div className='col'>
-                  <p className="card-text">
-                    {comment.content}
-                  </p>
-                </div>
-                <div className='col-auto'>{comment.created}</div>
+            <div key={comment.id} className="row p-0 mb-2">
+              <div className="col-auto small bg-secondary rounded-start">
+                <span className='text-white small' >{comment.createdFormat}</span>
               </div>
-
+              <div className="col border rounded-end">{comment.content}</div>
             </div>
           )}
         </div>
@@ -63,7 +53,9 @@ export default class TaskComments extends Component {
 
 
   render() {
-    let content = this.state.loading ? <p><em>Loading...</em></p> : this.renderComments();
+    let content = this.state.loading ?
+      <p><em>Loading...</em></p> :
+      this.renderComments();
 
     return (
       <div>{content}</div>
@@ -71,7 +63,6 @@ export default class TaskComments extends Component {
   }
 
   async createComment(content, taskId) {
-
     this.setState({ newComment: "" });
     await fetch('createComment', {
       method: 'POST',
