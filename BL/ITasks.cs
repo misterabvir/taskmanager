@@ -10,7 +10,6 @@ public interface ITasks
     Task<TaskModel> UpdateName(Guid taskId, string taskName);
     Task<TaskModel> UpdateTime(Guid taskId);
     Task<IEnumerable<TaskModel>> GetAll();
-    Task<IEnumerable<TaskModel>> GetByProjectName(string projectName);
     Task<IEnumerable<TaskModel>> GetByProjectId(Guid projectId);
     Task<TaskModel> GetById(Guid taskId);
 }

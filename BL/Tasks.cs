@@ -20,7 +20,8 @@ public class Tasks: ITasks
             Id = Guid.NewGuid(),
             TaskName = taskName,
             ProjectId = project.Id,
-            CreateDate = DateTime.Now
+            CreateDate = DateTime.Now,
+            UpdateDate = DateTime.Now,
         };
         await projects.Update(project.Id);
         await tasksDAL.Create(model);
@@ -64,13 +65,6 @@ public class Tasks: ITasks
     public async Task<IEnumerable<TaskModel>> GetAll()
     {
         return await tasksDAL.GetAll();
-    }
-
-    public async Task<IEnumerable<TaskModel>> GetByProjectName(string projectName)
-    {
-        ProjectModel project = await projects.GetByName(projectName);
-        if (project == null) return Enumerable.Empty<TaskModel>();
-        return await GetByProjectId(project.Id);
     }
 
     public async Task<IEnumerable<TaskModel>> GetByProjectId(Guid projectId)

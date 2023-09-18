@@ -4,7 +4,6 @@ import 'react-datetime/css/react-datetime.css';
 
 function DateTimePicker(props) {
   const [selectedDate, setSelectedDate] = useState(props.datetime);
-    console.log(props.placeHolder);
   const handleDateChange = (date) => {
     setSelectedDate(date);
     props.timeChange(date);

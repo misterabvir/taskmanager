@@ -87,7 +87,7 @@ export default class ProjectList extends Component {
 
 
   async createProject(name) {
-    this.setState({ projects: null, loading: true, creation: "", selected: null });
+    this.setState({ projects: null, loading: true, creation: ""});
     await fetch('createProject', {
       method: 'POST',
       headers: { 'Content-type': 'application/json' },
@@ -101,6 +101,6 @@ export default class ProjectList extends Component {
   async getProjectsListData() {
     const response = await fetch('projectsList');
     const data = await response.json();
-    this.setState({ projects: data, loading: false, selected: null });
+    this.setState({ projects: data, loading: false });
   }
 }

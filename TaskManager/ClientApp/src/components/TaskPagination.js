@@ -8,17 +8,20 @@ export default class TaskPagination extends Component {
   constructor(props) {
     super(props);
     this.state = { currentPage: 1, itemsPerPage: 3 };
-    this.pageClick = this.pageClick.bind(this);
+    this.handlePageClick = this.handlePageClick.bind(this);
   }
 
-  pageClick = (event) => {
+  handlePageClick = (event) => {
     this.setState({
       currentPage: Number(event.target.id),
     });
   };
-  handleChangeTime(value) {
-    console.log(value);
+
+
+  handleItemsInPerPageChange(value) {
+    this.setState({ itemsPerPage: value });
   }
+
   render() {
     const { data } = this.props;
     const { currentPage, itemsPerPage } = this.state;
@@ -31,6 +34,37 @@ export default class TaskPagination extends Component {
     }
     return (
       <div>
+        <div className='row'>
+          <div className="col-auto">
+            <label>Items per page: {this.state.itemsPerPage}</label> 
+            </div>
+          <div className="col">
+            <input
+            type="range"
+            class="form-range"
+            min="1"
+            max="10"
+            step="1"
+            value={this.state.itemsPerPage}
+            onChange={(e) => this.handleItemsInPerPageChange(e.target.value)}
+            id="sliderInput" /> 
+            </div>
+        </div>
+        <ul className="pagination">
+          {pageNumbers.map((number) => (
+            <li
+              key={number}
+              className={number === currentPage ?
+                'active page-item user-select-none' :
+                'page-item user-select-none'}>
+              <a className="page-link"
+                id={number}
+                onClick={this.handlePageClick}>
+                {number}
+              </a>
+            </li>
+          ))}
+        </ul>
         <table className="table">
           <thead>
             <tr>
@@ -50,21 +84,7 @@ export default class TaskPagination extends Component {
             }
           </tbody>
         </table>
-        <ul className="pagination">
-          {pageNumbers.map((number) => (
-            <li
-              key={number}
-              className={number === currentPage ?
-                'active page-item user-select-none' :
-                'page-item user-select-none'}>
-              <a className="page-link"
-                id={number}
-                onClick={this.pageClick}>
-                {number}
-              </a>
-            </li>
-          ))}
-        </ul>
+
       </div>
     );
   }

@@ -21,7 +21,7 @@ namespace TaskManager.Controllers
         public async Task<IEnumerable<CommentViewModel>> GetComments(GetCommentModel model)
         {
             var commentsList = await comments.GetByTaskId(model.TaskId);
-            return commentsList.OrderByDescending(c=>c.Created).Select(CommentMapper.MapCommentModelToCommentViewModel);
+            return commentsList.OrderByDescending(c=>c.CreateDate).Select(CommentMapper.MapCommentModelToCommentViewModel);
         }
 
         [HttpPost]

@@ -43,16 +43,8 @@ internal static class SQL
     internal static class Comments
     {
         public static string Create =>
-            @"INSERT INTO TaskComments(Id,TaskId, Created, Content) 
-              VALUES(@Id, @TaskId, @Created, @Content)";
-        public static string Update =>
-            @"UPDATE Project 
-              SET TaskId = @TaskId, 
-                  Created = @Created, 
-                  Content = @Content 
-              WHERE Id = @Id";
-
-        public static string GetById => @"SELECT * FROM TaskComments WHERE Id = @Id";
+            @"INSERT INTO TaskComments(Id,TaskId, CreateDate, Content) 
+              VALUES(@Id, @TaskId, @CreateDate, @Content)";
         public static string GetByTaskId => @"SELECT * FROM TaskComments WHERE TaskId = @TaskId";
     }
 }

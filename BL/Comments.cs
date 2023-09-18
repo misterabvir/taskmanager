@@ -19,7 +19,7 @@ public class Comments : IComments
         {
             Id = Guid.NewGuid(),
             TaskId = taskId,
-            Created = DateTime.Now,
+            CreateDate = DateTime.Now,
             Content = content
         };
 

@@ -16,7 +16,7 @@ export class TaskData extends Component {
     this.getTaskData();
   }
 
-  selectedChange = (value) => {
+  handleSelectedProjectChange = (value) => {
     this.setState({ selectedProject: value });
     this.getTaskData();
   }
@@ -50,39 +50,45 @@ export class TaskData extends Component {
     return end;
   }
 
-  renderTaskTable() {
+  renderDatePickers() {
     return (
-      <div>
-        <ProjectList selectedChange={this.selectedChange} />
-        <div className="row mt-2">
-          <div className="col">
-            <DateTimePicker
-              datetime={this.state.start}
-              placeHolder="select a start date-time"
-              timeChange={(value) => this.handleStartChangeTime(value)} />
-          </div>
-          <div className="col">
-            <DateTimePicker
-              datetime={this.state.end}
-              placeHolder="select a end date-time"
-              timeChange={(value) => this.handleEndChangeTime(value)} />
-          </div>
+      <div className="row mt-2">
+        <div className="col">
+          <DateTimePicker
+            datetime={this.state.start}
+            placeHolder="select a start date-time"
+            timeChange={(value) => this.handleStartChangeTime(value)} />
         </div>
-        <TaskPagination 
-          data={this.state.filteredTasks} 
-          reload={this.getTaskData} />
+        <div className="col">
+          <DateTimePicker
+            datetime={this.state.end}
+            placeHolder="select a end date-time"
+            timeChange={(value) => this.handleEndChangeTime(value)} />
+        </div>
       </div>
     );
   }
 
+  renderContent() {
+    return (<TaskPagination
+      data={this.state.filteredTasks}
+      reload={this.getTaskData} />);
+  }
+
   render() {
-    let contents = this.state.loading
+    const contents = this.state.loading
       ? <p><em>Loading...</em></p>
-      : this.renderTaskTable();
+      : this.renderContent();
+
+    const pickers = this.state.loading
+      ? <p><em>Loading...</em></p>
+      : this.renderDatePickers();
 
     return (
       <div>
         <h1 id="tableLabel">Task List</h1>
+        <ProjectList selectedChange={this.handleSelectedProjectChange} />
+        {pickers}
         {contents}
       </div>
     );

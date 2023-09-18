@@ -30,24 +30,39 @@ export class ProjectDetail extends Component {
     this.createTask(this.state.creation, this.state.project.id);
   }
 
-  renderProject() {
+  renderHeaderProject() {
+    const project = this.state.project;
+    if (!project) {
+      return (<NotFound />);
+    }
+    return (<div>
+      <h4>Project Name: <EditableField data={project.projectName} save={(value) => this.saveProjectName(value, project.id)} /></h4>
+      <figcaption className="figure-caption">
+        <span>Created: <cite>{project.createDateFormat}</cite></span> <br />
+        <span>Updated: <cite>{project.updateDateFormat}</cite></span>
+      </figcaption>
+    </div>);
+
+  }
+
+  renderContentProject() {
     const project = this.state.project;
     if (!project) {
       return (<NotFound />);
     }
     const tasks = project.tasks;
     return (
+      <div><TaskPagination data={tasks} reload={() => { this.getProjectDetail() }} /></div>
+    );
+  }
+
+  render() {
+    let header = this.state.loading ? <p><em>Loading...</em></p> : this.renderHeaderProject();
+    let content = this.state.loading ? <p><em>Loading...</em></p> : this.renderContentProject();
+    return (
       <div>
-        <figure>
-          <blockquote className="blockquote">
-            <h4>Project Name: <EditableField data={project.projectName} save={(value) => this.saveProjectName(value, project.id)} /></h4>
-          </blockquote>
-          <figcaption class="figure-caption">
-            <span>Created: <cite>{project.createDateFormat}</cite></span> <br/>
-            <span>Updated: <cite>{project.updateDateFormat}</cite></span>
-          </figcaption>
-        </figure>       
-        <div className="row">
+        {header}
+        <div className="row mt-2">
           <div className="col-3">
             <input
               type='text'
@@ -64,15 +79,8 @@ export class ProjectDetail extends Component {
             </button>
           </div>
         </div>
-        <TaskPagination data={tasks} reload={() => { this.getProjectDetail() }} />
+        {content}
       </div>
-    );
-  }
-
-  render() {
-    let content = this.state.loading ? <p><em>Loading...</em></p> : this.renderProject();
-    return (
-      <div>{content} </div>
     );
   }
 

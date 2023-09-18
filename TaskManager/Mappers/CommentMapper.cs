@@ -11,7 +11,7 @@ namespace TaskManager.Mappers
             {
                 Id = model.Id,
                 TaskId = model.TaskId,
-                Created = model.Created,
+                Created = model.CreateDate,
                 Content = model.Content
             };
         }

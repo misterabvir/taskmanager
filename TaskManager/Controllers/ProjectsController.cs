@@ -23,8 +23,7 @@ namespace TaskManager.Controllers
         [Route("/projectslist")]
         public async Task<IEnumerable<ProjectsListViewModel>> GetProjectsList()
         {
-            var projectList = await projects.GetAll();
-           
+            var projectList = await projects.GetAll();          
             return projectList.Select(ProjectsMapper.MapProjectModelToProjectListViewModel);
         }
 

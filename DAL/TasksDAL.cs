@@ -24,7 +24,9 @@ public class TasksDAL:ITasksDAL
     }
     public async Task<IEnumerable<TaskModel>> GetAll()
     {
-        return await repository.QueryAsync<TaskModel>(SQL.Task.GetAll, null);
+        var result = await repository.QueryAsync<TaskModel>(SQL.Task.GetAll, null);
+    
+        return result;
     }
     public async Task<TaskModel> GetById(Guid id)
     {
