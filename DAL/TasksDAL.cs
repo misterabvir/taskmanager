@@ -30,7 +30,7 @@ public class TasksDAL:ITasksDAL
     }
     public async Task<TaskModel> GetById(Guid id)
     {
-        return await repository.QuerySingleOrDefaultAsync<TaskModel>(SQL.Task.GetById, new { Id = id });
+        return await repository.QuerySingleOrDefaultAsync<TaskModel>(SQL.Task.GetById, new { TaskId = id });
     }
     public async Task<IEnumerable<TaskModel>> GetByProjectId(Guid projectId)
     {

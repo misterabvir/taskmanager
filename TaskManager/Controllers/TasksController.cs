@@ -27,7 +27,7 @@ public class TasksController : ControllerBase
         var taskvm = taskList.Select(task =>
             TaskMapper.MapTaskModelToTaskViewModel(
                 task, 
-                projectList.First(project => project.Id == task.ProjectId)!.ProjectName!));
+                projectList.First(project => project.ProjectId == task.ProjectId)!.ProjectName!)).ToArray();
         return taskvm.OrderByDescending(item=>item.UpdateDate);
     }
     [HttpPost]

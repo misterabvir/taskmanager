@@ -2,19 +2,21 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddSingleton<DAL.Base.IRepository>(new DAL.Base.MySqlRepository()
-{
-    ConnectionString = builder.Configuration.GetConnectionString("MySql") ??
-        throw new Exception("not found conection string in configuration")
-});
+builder.Services.AddScoped<DAL.Base.IRepository>(provider =>
+    new DAL.Base.MySqlRepository()
+    {
+        ConnectionString = builder.Configuration.GetConnectionString("MySql") ??
+            throw new Exception("not found conection string in configuration")
+    }   
+);
 
-builder.Services.AddSingleton<DAL.IProjectsDAL, DAL.ProjectsDAL>();
-builder.Services.AddSingleton<DAL.ITasksDAL, DAL.TasksDAL>();
-builder.Services.AddSingleton<DAL.ICommentsDAL, DAL.CommentsDAL>();
+builder.Services.AddScoped<DAL.IProjectsDAL, DAL.ProjectsDAL>();
+builder.Services.AddScoped<DAL.ITasksDAL, DAL.TasksDAL>();
+builder.Services.AddScoped<DAL.ICommentsDAL, DAL.CommentsDAL>();
 
-builder.Services.AddSingleton<BL.IProjects, BL.Projects>();
-builder.Services.AddSingleton<BL.ITasks, BL.Tasks>();
-builder.Services.AddSingleton<BL.IComments, BL.Comments>();
+builder.Services.AddScoped<BL.IProjects, BL.Projects>();
+builder.Services.AddScoped<BL.ITasks, BL.Tasks>();
+builder.Services.AddScoped<BL.IComments, BL.Comments>();
 
 
 var app = builder.Build();

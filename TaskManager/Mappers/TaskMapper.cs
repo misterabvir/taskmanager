@@ -9,7 +9,7 @@ namespace TaskManager.Mappers
         {
             return new TaskViewModel()
             {
-                Id = model.Id,
+                Id = model.TaskId,
                 TaskName = model.TaskName,
                 ProjectId = model.ProjectId,
                 ProjectName = projectName,

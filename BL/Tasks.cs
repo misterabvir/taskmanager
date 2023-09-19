@@ -17,13 +17,13 @@ public class Tasks: ITasks
     {
         ProjectModel project = await projects.GetById(projectId);
         TaskModel model = new TaskModel() {
-            Id = Guid.NewGuid(),
+            TaskId = Guid.NewGuid(),
             TaskName = taskName,
-            ProjectId = project.Id,
+            ProjectId = project.ProjectId,
             CreateDate = DateTime.Now,
             UpdateDate = DateTime.Now,
         };
-        await projects.Update(project.Id);
+        await projects.Update(project.ProjectId);
         await tasksDAL.Create(model);
         return model;
     }

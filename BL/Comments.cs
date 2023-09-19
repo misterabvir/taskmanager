@@ -17,7 +17,7 @@ public class Comments : IComments
     {
         CommentModel model = new CommentModel()
         {
-            Id = Guid.NewGuid(),
+            CommentId = Guid.NewGuid(),
             TaskId = taskId,
             CreateDate = DateTime.Now,
             Content = content

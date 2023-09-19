@@ -18,7 +18,7 @@ public class CommentsDALTest : DALTestBase
 
             CommentModel model = new CommentModel()
             {
-                Id = commentId,
+                CommentId = commentId,
                 TaskId =taskId,
                 Content = content,
                 CreateDate = commentCreated,
@@ -28,7 +28,7 @@ public class CommentsDALTest : DALTestBase
 
             IEnumerable<CommentModel> fromDbModel = await commentsDAL.GetByTaskId(taskId);
 
-            Assert.IsTrue(fromDbModel.Any(c=>c.Id == commentId));
+            Assert.IsTrue(fromDbModel.Any(c=>c.CommentId == commentId));
             Assert.IsTrue(fromDbModel.Any(c=>c.Content == content));
 
         }

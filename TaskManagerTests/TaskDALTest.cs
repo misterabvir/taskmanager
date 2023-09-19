@@ -21,7 +21,7 @@ public class ProjectDALTest : DALTestBase
 
             ProjectModel model = new ProjectModel()
             {
-                Id = id,
+                ProjectId = id,
                 ProjectName = name,
                 CreateDate = created,
                 UpdateDate = updated,

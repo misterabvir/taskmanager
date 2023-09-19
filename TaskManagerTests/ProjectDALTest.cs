@@ -18,7 +18,7 @@ public class TaskDALTest : DALTestBase
 
             ProjectModel model = new ProjectModel()
             {
-                Id = id,
+                ProjectId = id,
                 ProjectName = name,
                 CreateDate = created,
                 UpdateDate = updated,
@@ -28,7 +28,7 @@ public class TaskDALTest : DALTestBase
 
             ProjectModel fromDbModel = await projectDAL.GetById(id);
 
-            Assert.That(model.Id, Is.EqualTo(fromDbModel.Id));
+            Assert.That(model.ProjectId, Is.EqualTo(fromDbModel.ProjectId));
             Assert.That(model.ProjectName, Is.EqualTo(fromDbModel.ProjectName));
         }
 
@@ -45,7 +45,7 @@ public class TaskDALTest : DALTestBase
 
             ProjectModel project = new ProjectModel()
             {
-                Id = projectId,
+                ProjectId = projectId,
                 ProjectName = projectName,
                 CreateDate = projectCreated,
                 UpdateDate = projectUpdated,
@@ -57,7 +57,7 @@ public class TaskDALTest : DALTestBase
 
             TaskModel model = new TaskModel()
             {
-                Id = taskId,
+                TaskId = taskId,
                 ProjectId = projectId,
                 TaskName = taskName,
                 CreateDate = taskCreated
@@ -67,7 +67,7 @@ public class TaskDALTest : DALTestBase
 
             TaskModel fromDbModel = await taskDAL.GetById(taskId);
 
-            Assert.That(model.Id, Is.EqualTo(fromDbModel.Id));
+            Assert.That(model.TaskId, Is.EqualTo(fromDbModel.TaskId));
             Assert.That(model.TaskName, Is.EqualTo(fromDbModel.TaskName));
             Assert.That(model.ProjectId, Is.EqualTo(fromDbModel.ProjectId));
 
@@ -86,7 +86,7 @@ public class TaskDALTest : DALTestBase
 
             ProjectModel model = new ProjectModel()
             {
-                Id = id,
+                ProjectId = id,
                 ProjectName = name,
                 CreateDate = created,
                 UpdateDate = updated,
@@ -95,7 +95,7 @@ public class TaskDALTest : DALTestBase
             Assert.DoesNotThrowAsync(async () => await projectDAL.Create(model));
 
             IEnumerable<ProjectModel> fromDb = await projectDAL.GetAll();
-            Assert.IsTrue(fromDb.Any(model => model.Id == id));
+            Assert.IsTrue(fromDb.Any(model => model.ProjectId == id));
         }
     }
 }

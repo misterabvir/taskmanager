@@ -2,7 +2,7 @@
 
 public class TaskModel
 {
-    public Guid Id { get; set; }
+    public Guid TaskId { get; set; }
     public string? TaskName { get; set; }
     public Guid ProjectId { get; set; }
     public DateTime CreateDate { get; set; }

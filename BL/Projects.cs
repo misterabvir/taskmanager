@@ -15,7 +15,7 @@ public class Projects : IProjects
     {
         ProjectModel model = new()
         {
-            Id = Guid.NewGuid(),
+            ProjectId = Guid.NewGuid(),
             ProjectName = projectName,
             CreateDate = DateTime.Now,
         };

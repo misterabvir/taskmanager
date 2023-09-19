@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DAL.Base;
@@ -17,4 +18,6 @@ public interface IRepository
     
     /// <summary> request to get one row if it exists </summary>
     Task<T> QuerySingleOrDefaultAsync<T>(string sql, object model);
+
+    Task<IEnumerable<T>> QueryAsync<T, E>(string sql, Func<T, E, T> map, string splitOn, object model = null);
 }

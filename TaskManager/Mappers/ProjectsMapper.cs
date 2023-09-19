@@ -9,7 +9,7 @@ public static class ProjectsMapper
     {
         return new ProjectsListViewModel()
         {
-            Id = model.Id,
+            Id = model.ProjectId,
             ProjectName = model.ProjectName
         };
     }
@@ -18,7 +18,7 @@ public static class ProjectsMapper
     {
         return new ProjectViewModel()
         {
-            Id = model.Id,
+            Id = model.ProjectId,
             ProjectName = model.ProjectName,
             CreateDate = model.CreateDate,
             UpdateDate = model.UpdateDate,
