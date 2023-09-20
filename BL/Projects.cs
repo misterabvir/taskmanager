@@ -40,9 +40,4 @@ public class Projects : IProjects
     {
         return await projectDAL.GetById(id);
     }
-
-    public async Task<ProjectModel> GetByName(string projectName)
-    {
-        return await projectDAL.GetByName(projectName);
-    }
 }

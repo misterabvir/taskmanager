@@ -5,11 +5,10 @@ namespace BL;
 
 public class Comments : IComments
 {
-    private readonly ITasks tasks;
+
     private readonly ICommentsDAL commentsDAL;
-    public Comments(ITasks tasks, ICommentsDAL commentsDAL)
+    public Comments(ICommentsDAL commentsDAL)
     {
-        this.tasks = tasks;
         this.commentsDAL = commentsDAL;
     }
 
@@ -24,12 +23,6 @@ public class Comments : IComments
         };
 
         await commentsDAL.Create(model);
-        await tasks.UpdateTime(taskId);
         return  model;
-    }
-
-    public async Task<IEnumerable<CommentModel>> GetByTaskId(Guid taskId)
-    {
-        return await commentsDAL.GetByTaskId(taskId);
     }
 }

@@ -1,8 +1,6 @@
 ﻿using BL;
 using Microsoft.AspNetCore.Mvc;
-using TaskManager.Mappers;
-using TaskManager.ViewModels;
-using TaskManager.ViewModels.PostRequestModel;
+using TaskManagerWithTSReact.Server.ViewModels.PostRequestModel;
 
 namespace TaskManager.Controllers
 {
@@ -14,14 +12,6 @@ namespace TaskManager.Controllers
         public CommentsController(IComments comments)
         {
             this.comments = comments;
-        }
-
-        [HttpPost]
-        [Route("/getComments")]
-        public async Task<IEnumerable<CommentViewModel>> GetComments(GetCommentModel model)
-        {
-            var commentsList = await comments.GetByTaskId(model.TaskId);
-            return commentsList.OrderByDescending(c=>c.CreateDate).Select(CommentMapper.MapCommentModelToCommentViewModel);
         }
 
         [HttpPost]

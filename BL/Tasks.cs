@@ -15,15 +15,13 @@ public class Tasks: ITasks
 
     public async Task<TaskModel?> Create(string taskName, Guid projectId)
     {
-        ProjectModel project = await projects.GetById(projectId);
         TaskModel model = new TaskModel() {
             TaskId = Guid.NewGuid(),
             TaskName = taskName,
-            ProjectId = project.ProjectId,
+            ProjectId = projectId,
             CreateDate = DateTime.Now,
             UpdateDate = DateTime.Now,
         };
-        await projects.Update(project.ProjectId);
         await tasksDAL.Create(model);
         return model;
     }
@@ -36,7 +34,6 @@ public class Tasks: ITasks
             model.StartDate = DateTime.Now;
             model.UpdateDate = DateTime.Now;
             await tasksDAL.Update(model);
-            await projects.Update(model.ProjectId);
         }
         return model;
     }
@@ -58,32 +55,20 @@ public class Tasks: ITasks
         model.TaskName = taskName;
         model.UpdateDate = DateTime.Now;
         await tasksDAL.Update(model);
-        await projects.Update(model.ProjectId);
-        return model;
-    }
-
-    public async Task<IEnumerable<TaskModel>> GetAll()
-    {
-        return await tasksDAL.GetAll();
-    }
-
-    public async Task<IEnumerable<TaskModel>> GetByProjectId(Guid projectId)
-    {
-        return await tasksDAL.GetByProjectId(projectId);
-    }
-
-    public async Task<TaskModel> UpdateTime(Guid taskId)
-    {
-        TaskModel model = await tasksDAL.GetById(taskId);
-        model.UpdateDate = DateTime.UtcNow;
-        await tasksDAL.Update(model);
-        await projects.Update(model.ProjectId);
         return model;
     }
 
     public async Task<TaskModel> GetById(Guid taskId)
     {
         return await tasksDAL.GetById(taskId);
+    }
+
+    public async Task UpdateDescription(Guid taskId, string description)
+    {
+        TaskModel model = await tasksDAL.GetById(taskId);
+        model.UpdateDate = DateTime.UtcNow;
+        model.Description = description;
+        await tasksDAL.Update(model);
     }
 }
 

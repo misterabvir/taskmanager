@@ -1,8 +1,8 @@
 ﻿using BL;
 using Microsoft.AspNetCore.Mvc;
-using TaskManager.ViewModels;
-using TaskManager.Mappers;
-using TaskManager.ViewModels.PostRequestModel;
+using TaskManagerWithTSReact.Server.ViewModels;
+using TaskManagerWithTSReact.Server.Mappers;
+using TaskManagerWithTSReact.Server.ViewModels.PostRequestModel;
 
 namespace TaskManager.Controllers
 {
@@ -38,14 +38,13 @@ namespace TaskManager.Controllers
             return Ok();
         }
 
-        //[HttpPost]
-        //[Route("/projectDetail")]
-        //public async Task<ProjectViewModel> GetProjectDetail(ProjectDetailModel model)
-        //{
-        //    var project = await projects.GetById(model.id);
-        //    var projectasks = await tasks.GetByProjectId(model.id);
-        //    return ProjectsMapper.MapProjectModelToProjectViewModel(project, projectasks.Select(task=> TaskMapper.MapTaskModelToTaskViewModel(task)));
-        //}
+        [HttpPost]
+        [Route("/projectDetail")]
+        public async Task<ProjectViewModel> GetProjectDetail(ProjectDetailModel model)
+        {
+            var project = await projects.GetById(model.ProjectId);
+            return ProjectsMapper.MapProjectModelToProjectViewModel(project);
+        }
 
         [HttpPost]
         [Route("/saveProjectName")]
@@ -53,7 +52,7 @@ namespace TaskManager.Controllers
         {
             if (string.IsNullOrWhiteSpace(model.Name))
                 return BadRequest();
-            await projects.Update(model.Id, model.Name);
+            await projects.Update(model.ProjectId, model.Name);
             return Ok();
         }
     }

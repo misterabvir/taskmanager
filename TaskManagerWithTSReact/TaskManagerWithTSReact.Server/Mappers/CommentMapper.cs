@@ -1,7 +1,7 @@
 ﻿using Domain;
-using TaskManager.ViewModels;
+using TaskManagerWithTSReact.Server.ViewModels;
 
-namespace TaskManager.Mappers
+namespace TaskManagerWithTSReact.Server.Mappers
 {
     public static class CommentMapper
     {

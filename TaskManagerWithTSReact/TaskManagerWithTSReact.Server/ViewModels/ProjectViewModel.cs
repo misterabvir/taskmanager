@@ -1,6 +1,6 @@
-﻿using TaskManager.ViewModels.Utils;
+﻿using TaskManagerWithTSReact.Server.ViewModels.Utils;
 
-namespace TaskManager.ViewModels;
+namespace TaskManagerWithTSReact.Server.ViewModels;
 
 public class ProjectViewModel
 {

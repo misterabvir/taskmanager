@@ -1,7 +1,7 @@
 ﻿using Domain;
-using TaskManager.ViewModels;
+using TaskManagerWithTSReact.Server.ViewModels;
 
-namespace TaskManager.Mappers
+namespace TaskManagerWithTSReact.Server.Mappers
 {
     public static class TaskMapper
     {
@@ -11,12 +11,14 @@ namespace TaskManager.Mappers
             {
                 TaskId = model.TaskId,
                 TaskName = model.TaskName,
-
+                Description = model.Description,
+                ProjectName = model.ProjectName,
                 ProjectId = model.ProjectId,
                 StartDate = model.StartDate,
                 UpdateDate = model.UpdateDate,
                 CancelDate = model.CancelDate,
-                CreateDate = model.CreateDate
+                CreateDate = model.CreateDate,
+                Comments = model.Comments.Select(CommentMapper.MapCommentModelToCommentViewModel).ToList(),
             };
         }
     }

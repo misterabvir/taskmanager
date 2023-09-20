@@ -1,4 +1,4 @@
-﻿namespace TaskManager.ViewModels.Utils;
+﻿namespace TaskManagerWithTSReact.Server.ViewModels.Utils;
 
 public static class DateTimeExtension
 {

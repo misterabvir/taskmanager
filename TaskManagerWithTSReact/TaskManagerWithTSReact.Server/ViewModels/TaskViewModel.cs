@@ -1,17 +1,20 @@
-﻿using TaskManager.ViewModels.Utils;
+﻿using Microsoft.AspNetCore.Mvc.Formatters;
+using TaskManagerWithTSReact.Server.ViewModels.Utils;
 
-namespace TaskManager.ViewModels;
+namespace TaskManagerWithTSReact.Server.ViewModels;
 
 public class TaskViewModel
 {
     public Guid TaskId { get; set; }
     public string? TaskName { get; set; }
+    public string? Description { get; set; }
     public Guid ProjectId { get; set; }
     public string ProjectName { get; set; } = string.Empty;
     public DateTime CreateDate { get; set; }
     public DateTime? StartDate { get; set; }
     public DateTime? CancelDate { get; set; }
     public DateTime? UpdateDate { get; set; }
+    public List<CommentViewModel> Comments { get; set; } = new List<CommentViewModel>();
 
     public string State
     {

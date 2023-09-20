@@ -54,6 +54,26 @@ export default defineConfig({
             '^/saveProjectName': {
                 target: 'https://localhost:7060/',
                 secure: false
+            },            
+            '^/projectDetail': {
+                target: 'https://localhost:7060/',
+                secure: false
+            },              
+            '^/createTask': {
+                target: 'https://localhost:7060/',
+                secure: false
+            },
+            '^/saveDescription': {
+                target: 'https://localhost:7060/',
+                secure: false
+            },
+            '^/taskDetail': {
+                target: 'https://localhost:7060/',
+                secure: false
+            },
+            '^/createComment': {
+                target: 'https://localhost:7060/',
+                secure: false
             },
         },
         port: 5173,

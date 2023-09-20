@@ -25,7 +25,7 @@ public class ProjectsDAL : IProjectsDAL
     {
         var projectList = new List<ProjectModel>();
         var results = await repository.QueryAsync<ProjectModel, TaskModel>(
-            sql: SQL.Project.Get,
+            sql: SQL.Project.GetAll,
             map: (project, task) =>
             {
                 ProjectModel model = projectList.FirstOrDefault(pr=>pr.ProjectId == project.ProjectId);
@@ -64,31 +64,8 @@ public class ProjectsDAL : IProjectsDAL
         return model;
     }
 
-    public async Task<ProjectModel> GetByName(string projectName)
-    {
-        ProjectModel model = null;
-        var results = await repository.QueryAsync<ProjectModel, TaskModel>(
-            sql: SQL.Project.GetProjectByProjectName,
-            map: (project, task) =>
-            {
-                if (model == null)
-                {
-                    model = project;
-                    model.Tasks = new List<TaskModel>();
-                }
-                if (task != null)
-                    model.Tasks.Add(task);
-                return model;
-            },
-            splitOn: SQL.Project.SplitOnByTaskId,
-            model: new { ProjectName = projectName });
-        return model;
-    }
-
     public async Task Update(ProjectModel model)
     {
         await repository.ExecuteAsync(SQL.Project.Update, model);
     }
-
-
 }

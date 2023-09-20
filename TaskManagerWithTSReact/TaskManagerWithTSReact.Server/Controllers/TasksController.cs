@@ -1,8 +1,8 @@
 ﻿using BL;
 using Microsoft.AspNetCore.Mvc;
-using TaskManager.Mappers;
-using TaskManager.ViewModels;
-using TaskManager.ViewModels.PostRequestModel;
+using TaskManagerWithTSReact.Server.Mappers;
+using TaskManagerWithTSReact.Server.ViewModels;
+using TaskManagerWithTSReact.Server.ViewModels.PostRequestModel;
 
 namespace TaskManager.Controllers;
 
@@ -18,33 +18,20 @@ public class TasksController : ControllerBase
         this.tasks = tasks;
     }
 
-    //[HttpGet]
-    //[Route("/taskList")]
-    //public async Task<IEnumerable<TaskViewModel>> Get()
-    //{
-    //    var taskList = await tasks.GetAll();
-    //    var projectList = await projects.GetAll();
-    //    var taskvm = taskList.Select(task =>
-    //        TaskMapper.MapTaskModelToTaskViewModel(
-    //            task, 
-    //            projectList.First(project => project.ProjectId == task.ProjectId)!.ProjectName!)).ToArray();
-    //    return taskvm.OrderByDescending(item=>item.UpdateDate);
-    //}
-    //[HttpPost]
-    //[Route("/getTask")]
-    //public async Task<TaskViewModel> GetTask(TaskDetailModel model)
-    //{
-    //    var task = await tasks.GetById(model.Id);
-    //    var project = await projects.GetById(task.ProjectId);
-    //    return TaskMapper.MapTaskModelToTaskViewModel(task, project.ProjectName!);
-    //}
+    [HttpPost]
+    [Route("/taskDetail")]
+    public async Task<TaskViewModel> GetTaskDetail(TaskDetailModel model)
+    {
+        var task = await tasks.GetById(model.TaskId);
+        return TaskMapper.MapTaskModelToTaskViewModel(task);
+    }
 
 
     [HttpPost]
     [Route("/startTask")]
     public async Task<IActionResult> StartTask(ActionTaskModel model)
     {
-        await tasks.Start(model.Id);
+        await tasks.Start(model.TaskId);
         return Ok();
     }
 
@@ -52,7 +39,7 @@ public class TasksController : ControllerBase
     [Route("/cancelTask")]
     public async Task<IActionResult> CancelTask(ActionTaskModel model)
     {
-        await tasks.Cancel(model.Id);
+        await tasks.Cancel(model.TaskId);
         return Ok();
     }
 
@@ -62,18 +49,26 @@ public class TasksController : ControllerBase
     {
         if (string.IsNullOrWhiteSpace(model.Name))
             return BadRequest();
-        await tasks.UpdateName(model.Id, model.Name);
+        await tasks.UpdateName(model.TaskId, model.Name);
+        return Ok();
+    }
+    [HttpPost]
+    [Route("/saveDescription")]
+    public async Task<IActionResult> SaveTaskDescriprion(SaveTaskDescription model)
+    {
+        if (string.IsNullOrWhiteSpace(model.Description))
+            return BadRequest();
+        await tasks.UpdateDescription(model.TaskId, model.Description);
         return Ok();
     }
 
-
-    //[HttpPost]
-    //[Route("/createTask")]
-    //public async Task<IActionResult> CreateTask(CreateTaskModel model)
-    //{
-    //    await tasks.Create(model.TaskName!, model.ProjectId);
-    //    return Ok();
-    //}
+    [HttpPost]
+    [Route("/createTask")]
+    public async Task<IActionResult> CreateTask(CreateTaskModel model)
+    {
+        await tasks.Create(model.TaskName!, model.ProjectId);
+        return Ok();
+    }
 }
 
 

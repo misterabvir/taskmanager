@@ -1,5 +1,5 @@
-﻿using TaskManager.ViewModels.Utils;
-namespace TaskManager.ViewModels;
+﻿using TaskManagerWithTSReact.Server.ViewModels.Utils;
+namespace TaskManagerWithTSReact.Server.ViewModels;
 
 public class CommentViewModel
 {

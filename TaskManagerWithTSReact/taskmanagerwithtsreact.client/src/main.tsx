@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import ProjectData from './Components/ProjectData.tsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import App from './App.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ProjectData />
+    <App />
   </React.StrictMode>,
 )

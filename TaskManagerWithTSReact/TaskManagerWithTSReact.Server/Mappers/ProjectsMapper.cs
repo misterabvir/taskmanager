@@ -1,19 +1,10 @@
 ﻿using Domain;
-using TaskManager.ViewModels;
+using TaskManagerWithTSReact.Server.ViewModels;
 
-namespace TaskManager.Mappers;
+namespace TaskManagerWithTSReact.Server.Mappers;
 
 public static class ProjectsMapper
 {
-    public static ProjectsListViewModel MapProjectModelToProjectListViewModel(ProjectModel model)
-    {
-        return new ProjectsListViewModel()
-        {
-            Id = model.ProjectId,
-            ProjectName = model.ProjectName
-        };
-    }
-
     public static ProjectViewModel MapProjectModelToProjectViewModel(ProjectModel model)
     {
         return new ProjectViewModel()
