@@ -1,8 +1,9 @@
 import { Component } from 'react';
 import { TaskViewModel } from "../../../ViewModels/TaskViewModel";
-import EditableFieldComponent from '../EditableFieldComponent';
+import EditableTextAreaComponent from '../EditableTextAreaComponent';
 import TaskItemAction from './TaskItemAction';
 import { PostRequest } from '../../FetchServer/FetchServer';
+import { SAVE_TASK_DESCRIPTION } from '../../../Utils/Const';
 
 type TaskTableItemsProps = {
   task: TaskViewModel,
@@ -16,18 +17,7 @@ export default class TaskItem extends Component<TaskTableItemsProps>{
   }
 
   async handleTaskDescriptionChanged(taskDescription: string, taskId: string) {
-    console.log(taskId);
-    await PostRequest('/saveDescription', { TaskId: taskId, Description: taskDescription });
-  }
-
-  handleTaskCanceled = async (taskId: string) => {
-    await PostRequest('/cancelTask', { TaskId: taskId });
-    this.props.reload();
-  }
-
-  handleTaskStarted = async (taskId: string) => {
-    await PostRequest('/startTask', { TaskId: taskId });
-    this.props.reload();
+    await PostRequest(SAVE_TASK_DESCRIPTION, { TaskId: taskId, Description: taskDescription });
   }
 
   render() {
@@ -63,7 +53,7 @@ export default class TaskItem extends Component<TaskTableItemsProps>{
             </div>
             <div className="card-body">
               <div className="row">
-                <EditableFieldComponent
+                <EditableTextAreaComponent
                   data={task.description}
                   save={(value: string) => this.handleTaskDescriptionChanged(value, task.taskId)} />
               </div>
@@ -72,9 +62,8 @@ export default class TaskItem extends Component<TaskTableItemsProps>{
               <div className="col">
                 <TaskItemAction
                   status={task.state}
-                  cancelAction={this.handleTaskCanceled}
-                  startAction={this.handleTaskStarted}
-                  value={task.taskId} />
+                  reload={this.props.reload}
+                  taskId={task.taskId} />
               </div>
               <div className="col-auto mt-1">{task.inWork}</div>
             </div>

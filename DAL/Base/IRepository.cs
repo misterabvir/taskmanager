@@ -4,11 +4,11 @@ using System.Threading.Tasks;
 
 namespace DAL.Base;
 
-public interface IRepository
+public interface IRepository<T> where T :class
 {
-    string ConnectionString { get; set; }
-    
-    Task ExecuteAsync(string sql, object model);
-
-    Task<IEnumerable<T>> QueryAsync<T, E>(string sql, Func<T, E, T> map, string splitOn, object model = null);
+    Task<IEnumerable<T>> GetAllAsync();
+    Task<T> GetByIdAsync(Guid id);
+    Task AddAsync(T entity);
+    Task UpdateAsync(T entity);
+    Task DeleteAsync(T entity);
 }

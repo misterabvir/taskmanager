@@ -1,12 +1,13 @@
 ﻿using DAL;
+using DAL.Base;
 using Domain;
 
 namespace BL;
 
 public class Projects : IProjects
 {
-    private readonly IProjectsDAL projectDAL;
-    public Projects(IProjectsDAL projectDAL)
+    private readonly IRepository<ProjectModel> projectDAL;
+    public Projects(IRepository<ProjectModel> projectDAL)
     {
         this.projectDAL = projectDAL;
     }
@@ -19,25 +20,25 @@ public class Projects : IProjects
             ProjectName = projectName,
             CreateDate = DateTime.Now,
         };
-        await projectDAL.Create(model);
+        await projectDAL.AddAsync(model);
         return model;
     }
     public async Task<ProjectModel> Update(Guid projectId, string? projectName = null)
     {
-        ProjectModel model = await projectDAL.GetById(projectId);
+        ProjectModel model = await projectDAL.GetByIdAsync(projectId);
         if (model == null) throw new Exception("project has been not exixts");
         if (projectName != null) model.ProjectName = projectName;
         model.UpdateDate = DateTime.Now;
-        await projectDAL.Update(model);
+        await projectDAL.UpdateAsync(model);
         return model;
     }
     public async Task<IEnumerable<ProjectModel>> GetAll()
     {
-        return await projectDAL.GetAll();
+        return await projectDAL.GetAllAsync();
     }
 
     public async Task<ProjectModel> GetById(Guid id)
     {
-        return await projectDAL.GetById(id);
+        return await projectDAL.GetByIdAsync(id);
     }
 }

@@ -1,2 +1,13 @@
 export const GUID_EMPTY = '00000000-0000-0000-0000-000000000000';
 export const ALL = 'All';
+export const PROJECT_LIST = '/projectsList';
+export const SAVE_PROJECT_NAME = '/saveProjectName';
+export const PROJECT_DETAIL = '/projectDetail';
+export const CREATE_PROJECT = '/createProject';
+export const TASK_DETAIL = '/taskDetail';
+export const SAVE_TASK_NAME = '/saveTaskName';
+export const CREATE_TASK = '/createTask';
+export const START_TASK = '/startTask';
+export const CANCEL_TASK = '/cancelTask';
+export const SAVE_TASK_DESCRIPTION = '/saveDescription';
+export const CREATE_COMMENT = '/createComment';

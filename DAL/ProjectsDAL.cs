@@ -1,71 +1,40 @@
 ﻿using DAL.Base;
 using Domain;
-using Google.Protobuf.Collections;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace DAL;
-
-public class ProjectsDAL : IProjectsDAL
+public class ProjectsDAL : IRepository<ProjectModel>
 {
-    private readonly IRepository repository;
-    public ProjectsDAL(IRepository repository)
+    private readonly IDataAccess<ProjectModel> dataAccessStrategy;
+    public ProjectsDAL(IDataAccess<ProjectModel> dataAccessStrategy)
     {
-        this.repository = repository;
+        this.dataAccessStrategy = dataAccessStrategy;
     }
 
-    public async Task Create(ProjectModel model)
+    public async Task AddAsync(ProjectModel entity)
     {
-        await repository.ExecuteAsync(SQL.Project.Create, model);
+        await dataAccessStrategy.AddAsync(entity);
     }
 
-    public async Task<IEnumerable<ProjectModel>> GetAll()
+    public async Task DeleteAsync(ProjectModel entity)
     {
-        var projectList = new List<ProjectModel>();
-        var results = await repository.QueryAsync<ProjectModel, TaskModel>(
-            sql: SQL.Project.GetAll,
-            map: (project, task) =>
-            {
-                ProjectModel model = projectList.FirstOrDefault(pr=>pr.ProjectId == project.ProjectId);
-                if (model == null)
-                {
-                    model = project;
-                    model.Tasks = new List<TaskModel>();
-                    projectList.Add(model);
-                }
-                if(task != null)
-                    model.Tasks.Add(task);
-                return model;
-            },
-            splitOn: "TaskId");
-        return projectList;
+        await dataAccessStrategy.DeleteAsync(entity);
     }
 
-    public async Task<ProjectModel> GetById(Guid id)
+    public async Task<IEnumerable<ProjectModel>> GetAllAsync()
     {
-        ProjectModel model = null;
-        var results = await repository.QueryAsync<ProjectModel, TaskModel>(
-            sql: SQL.Project.GetProjectByProjectId,
-            map: (project, task) =>
-            {
-                if (model == null)
-                {
-                    model = project;
-                    model.Tasks = new List<TaskModel>();
-                }
-                if (task != null)
-                    model.Tasks.Add(task);
-                return model;
-            },
-            splitOn: SQL.Project.SplitOnByTaskId,
-            model: new { ProjectId = id });
-        return model;
+        return await dataAccessStrategy.GetAllAsync();
     }
 
-    public async Task Update(ProjectModel model)
+    public async Task<ProjectModel> GetByIdAsync(Guid id)
     {
-        await repository.ExecuteAsync(SQL.Project.Update, model);
+        return await dataAccessStrategy.GetByIdAsync(id);
+    }
+
+    public async Task UpdateAsync(ProjectModel entity)
+    {
+        await dataAccessStrategy.UpdateAsync(entity);
     }
 }

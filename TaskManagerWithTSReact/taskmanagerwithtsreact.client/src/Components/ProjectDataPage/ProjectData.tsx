@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { ALL, GUID_EMPTY } from '../../Utils/Const'
+import { ALL, CREATE_PROJECT, GUID_EMPTY, PROJECT_LIST, SAVE_PROJECT_NAME } from '../../Utils/Const'
 import { TaskViewModel } from '../../ViewModels/TaskViewModel';
 import { ProjectViewModel } from "../../ViewModels/ProjectViewModel";
 import DropDownProjectList from "./DropDownProjectList";
@@ -37,12 +37,12 @@ export default class ProjectData extends Component<{}, ProjectDataState> {
     this.getProjects();
   }
   handleProjectNameChanged = async (value: string) => {
-    await PostRequest('saveProjectName', { ProjectId: this.state.selectedProjectId, Name: value })
+    await PostRequest(SAVE_PROJECT_NAME, { ProjectId: this.state.selectedProjectId, Name: value })
     await this.getProjects();
   };
 
   handleNewNameCreated = async (newProjectName: string) => {
-    await PostRequest('createProject', { ProjectName: newProjectName })
+    await PostRequest(CREATE_PROJECT, { ProjectName: newProjectName })
     await this.getProjects();
   }
 
@@ -139,7 +139,7 @@ export default class ProjectData extends Component<{}, ProjectDataState> {
 
   getProjects = async () => {
     this.setState({ isLoading: true });
-    const data = await GetRequest('/projectsList');
+    const data = await GetRequest(PROJECT_LIST);
     this.setState({ projects: data, isLoading: false, startDate: this.searchMinDate(data), endDate: this.searchMaxDate(data) });
   }
 }

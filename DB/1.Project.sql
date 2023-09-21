@@ -1,8 +1,8 @@
-﻿-- Active: 1695048300061@@127.0.0.1@3306@TaskManagerDb
+﻿-- Active: 1695287194983@@127.0.0.1@1433@TaskManagerDb
 USE TaskManagerDb;
 DROP TABLE IF EXISTS Projects;
 CREATE TABLE Projects(
-	ProjectId CHAR(36) PRIMARY KEY UNIQUE,
+	ProjectId CHAR(36) PRIMARY KEY,
 	ProjectName VARCHAR(255) UNIQUE,
 	CreateDate DateTime,
 	UpdateDate DateTime

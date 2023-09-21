@@ -1,23 +1,21 @@
+using TaskManagerWithTSReact.Server.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<DAL.Base.IRepository>(provider =>
-    new DAL.Base.MySqlRepository()
-    {
-        ConnectionString = builder.Configuration.GetConnectionString("MySql") ??
-            throw new Exception("not found conection string in configuration")
-    }
-);
 
-builder.Services.AddScoped<DAL.IProjectsDAL, DAL.ProjectsDAL>();
-builder.Services.AddScoped<DAL.ITasksDAL, DAL.TasksDAL>();
-builder.Services.AddScoped<DAL.ICommentsDAL, DAL.CommentsDAL>();
+builder.Services.AddProviderDb(builder.Configuration, ProviderDb.MySql); 
+//builder.Services.AddProviderDb(builder.Configuration, ProviderDb.MsSql);
 
-builder.Services.AddScoped<BL.IProjects, BL.Projects>();
-builder.Services.AddScoped<BL.ITasks, BL.Tasks>();
-builder.Services.AddScoped<BL.IComments, BL.Comments>();
+builder.Services.AddDAL();
+
+builder.Services.AddOrm(Orm.Ef); 
+//builder.Services.AddOrm(Orm.Dapper);
+
+builder.Services.AddBL();
+
 
 var app = builder.Build();
 

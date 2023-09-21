@@ -1,4 +1,4 @@
-﻿using DAL;
+﻿using DAL.Base;
 using Domain;
 
 namespace BL;
@@ -6,8 +6,8 @@ namespace BL;
 public class Comments : IComments
 {
 
-    private readonly ICommentsDAL commentsDAL;
-    public Comments(ICommentsDAL commentsDAL)
+    private readonly IRepository<CommentModel> commentsDAL;
+    public Comments(IRepository<CommentModel> commentsDAL)
     {
         this.commentsDAL = commentsDAL;
     }
@@ -22,7 +22,7 @@ public class Comments : IComments
             Content = content
         };
 
-        await commentsDAL.Create(model);
+        await commentsDAL.AddAsync(model);
         return  model;
     }
 }

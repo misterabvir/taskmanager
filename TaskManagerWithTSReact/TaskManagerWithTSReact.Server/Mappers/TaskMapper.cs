@@ -11,7 +11,7 @@ namespace TaskManagerWithTSReact.Server.Mappers
             {
                 TaskId = model.TaskId,
                 TaskName = model.TaskName,
-                Description = model.Description,
+                Description = model.Description ?? "",
                 ProjectName = model.ProjectName,
                 ProjectId = model.ProjectId,
                 StartDate = model.StartDate,

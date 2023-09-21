@@ -1,15 +1,14 @@
 ﻿using DAL;
+using DAL.Base;
 using Domain;
 
 namespace BL;
 
 public class Tasks: ITasks
 {
-    private readonly IProjects projects;
-    private readonly ITasksDAL tasksDAL;
-    public Tasks(IProjects projects, ITasksDAL tasksDAL)
+    private readonly IRepository<TaskModel> tasksDAL;
+    public Tasks(IRepository<TaskModel> tasksDAL)
     {
-        this.projects = projects;
         this.tasksDAL = tasksDAL;
     }
 
@@ -22,53 +21,53 @@ public class Tasks: ITasks
             CreateDate = DateTime.Now,
             UpdateDate = DateTime.Now,
         };
-        await tasksDAL.Create(model);
+        await tasksDAL.AddAsync(model);
         return model;
     }
 
     public async Task<TaskModel> Start(Guid taskId)
     {
-        TaskModel model = await tasksDAL.GetById(taskId);
+        TaskModel model = await tasksDAL.GetByIdAsync(taskId);
         if (model.StartDate == null)
         {
             model.StartDate = DateTime.Now;
             model.UpdateDate = DateTime.Now;
-            await tasksDAL.Update(model);
+            await tasksDAL.UpdateAsync(model);
         }
         return model;
     }
 
     public async Task<TaskModel> Cancel(Guid taskId)
     {
-        TaskModel model = await tasksDAL.GetById(taskId);
+        TaskModel model = await tasksDAL.GetByIdAsync(taskId);
         if (model.StartDate != null && model.CancelDate == null)
         {
             model.CancelDate = DateTime.Now;
             model.UpdateDate = DateTime.Now;
-            await tasksDAL.Update(model);
+            await tasksDAL.UpdateAsync(model);
         }
         return model;
     }
     public async Task<TaskModel> UpdateName(Guid taskId, string taskName)
     {
-        TaskModel model = await tasksDAL.GetById(taskId);
+        TaskModel model = await tasksDAL.GetByIdAsync(taskId);
         model.TaskName = taskName;
         model.UpdateDate = DateTime.Now;
-        await tasksDAL.Update(model);
+        await tasksDAL.UpdateAsync(model);
         return model;
     }
 
     public async Task<TaskModel> GetById(Guid taskId)
     {
-        return await tasksDAL.GetById(taskId);
+        return await tasksDAL.GetByIdAsync(taskId);
     }
 
     public async Task UpdateDescription(Guid taskId, string description)
     {
-        TaskModel model = await tasksDAL.GetById(taskId);
+        TaskModel model = await tasksDAL.GetByIdAsync(taskId);
         model.UpdateDate = DateTime.UtcNow;
         model.Description = description;
-        await tasksDAL.Update(model);
+        await tasksDAL.UpdateAsync(model);
     }
 }
 

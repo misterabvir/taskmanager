@@ -2,10 +2,11 @@ import { Component } from 'react';
 import { useParams } from 'react-router-dom';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import { ProjectViewModel } from '../../ViewModels/ProjectViewModel';
-import EditableFieldComponent from '../SharedComponents/EditableFieldComponent';
 import TaskTableItems from '../SharedComponents/TaskTable/TaskTableItems';
 import InputComponent from '../SharedComponents/InputComponent';
 import { PostRequest, PostRequestReturnable } from '../FetchServer/FetchServer';
+import EditableInputComponent from '../SharedComponents/EditableInputComponent';
+import { CREATE_TASK, PROJECT_DETAIL, SAVE_PROJECT_NAME } from '../../Utils/Const';
 
 export default function ProjectDetailPage() {
   let { id } = useParams();
@@ -35,11 +36,11 @@ class ProjectDetail extends Component<ProjectDetailProps, ProjectDetailState>{
   }
 
   handleProjectNameChange = async (name: string) => {
-    await PostRequest('/saveProjectName', { ProjectId: this.state.project?.projectId, Name: name });
+    await PostRequest(SAVE_PROJECT_NAME, { ProjectId: this.state.project?.projectId, Name: name });
   }
 
   handleNewTaskCreate = async (name: string) => {
-    await PostRequest('/createTask', { ProjectId: this.state.project?.projectId, TaskName: name },);
+    await PostRequest(CREATE_TASK, { ProjectId: this.state.project?.projectId, TaskName: name },);
     await this.getProjectDetail();
   };
 
@@ -51,7 +52,7 @@ class ProjectDetail extends Component<ProjectDetailProps, ProjectDetailState>{
     tasks.sort((t1, t2) => new Date(t2.updateDate).getTime() - new Date(t1.updateDate).getTime())
     return (
       <div>
-        <h3>Project detail for <EditableFieldComponent data={project.projectName} save={this.handleProjectNameChange} /></h3>
+        <h3>Project detail for <EditableInputComponent data={project.projectName} save={this.handleProjectNameChange} /></h3>
         <table className='table small'>
           <thead>
             <tr>
@@ -86,7 +87,7 @@ class ProjectDetail extends Component<ProjectDetailProps, ProjectDetailState>{
   }
 
   getProjectDetail = async () => {
-    const data = await PostRequestReturnable('/projectDetail', { ProjectId: this.props.projectId });
+    const data = await PostRequestReturnable(PROJECT_DETAIL, { ProjectId: this.props.projectId });
     this.setState({ project: data, isLoading: false });
   }
 }

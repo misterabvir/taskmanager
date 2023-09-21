@@ -3,45 +3,38 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
 using DAL.Base;
-using System.Linq;
 
 namespace DAL;
-
-public class TasksDAL : ITasksDAL
+public class TasksDAL : IRepository<TaskModel>
 {
-    private readonly IRepository repository;
-    public TasksDAL(IRepository repository)
+    private readonly IDataAccess<TaskModel> dataAccessStrategy;
+    public TasksDAL(IDataAccess<TaskModel> dataAccessStrategy)
     {
-        this.repository = repository;
+        this.dataAccessStrategy = dataAccessStrategy;
     }
 
-    public async Task Create(TaskModel model)
+    public async Task AddAsync(TaskModel entity)
     {
-        await repository.ExecuteAsync(SQL.Task.Create, model);
-    }
-    public async Task Update(TaskModel model)
-    {
-        await repository.ExecuteAsync(SQL.Task.Update, model);
+        await dataAccessStrategy.AddAsync(entity);
     }
 
-    public async Task<TaskModel> GetById(Guid id)
+    public async Task DeleteAsync(TaskModel entity)
     {
-        TaskModel model = null;
-        var results = await repository.QueryAsync<TaskModel, CommentModel>(
-            sql: SQL.Task.GetByTaskId,
-            map: (task, comment) =>
-            {
-                if (model == null)
-                {
-                    model = task;
-                    model.Comments = new List<CommentModel>();
-                }
-                if (comment != null)
-                    model.Comments.Add(comment);
-                return model;
-            },
-            splitOn: SQL.Task.SplitOnByCommentId,
-            model: new { TaskId = id });
-        return model;
+        await dataAccessStrategy.DeleteAsync(entity);
+    }
+
+    public async Task<IEnumerable<TaskModel>> GetAllAsync()
+    {
+        return await dataAccessStrategy.GetAllAsync();
+    }
+
+    public async Task<TaskModel> GetByIdAsync(Guid id)
+    {
+        return await dataAccessStrategy.GetByIdAsync(id);
+    }
+
+    public async Task UpdateAsync(TaskModel entity)
+    {
+        await dataAccessStrategy.UpdateAsync(entity);
     }
 }

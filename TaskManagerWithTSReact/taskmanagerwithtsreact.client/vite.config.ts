@@ -5,6 +5,7 @@ import plugin from '@vitejs/plugin-react';
 import fs from 'fs';
 import path from 'path';
 
+
 const baseFolder =
     process.env.APPDATA !== undefined && process.env.APPDATA !== ''
         ? `${process.env.APPDATA}/ASP.NET/https`
@@ -31,50 +32,17 @@ export default defineConfig({
     },
     server: {
         proxy: {
-            '^/projectsList': {
-                target: 'https://localhost:7060/',
-                secure: false
-            },
-            '^/createProject': {
-                target: 'https://localhost:7060/',
-                secure: false
-            },
-            '^/saveTaskName': {
-                target: 'https://localhost:7060/',
-                secure: false
-            },
-            '^/startTask': {
-                target: 'https://localhost:7060/',
-                secure: false
-            },
-            '^/cancelTask': {
-                target: 'https://localhost:7060/',
-                secure: false
-            },            
-            '^/saveProjectName': {
-                target: 'https://localhost:7060/',
-                secure: false
-            },            
-            '^/projectDetail': {
-                target: 'https://localhost:7060/',
-                secure: false
-            },              
-            '^/createTask': {
-                target: 'https://localhost:7060/',
-                secure: false
-            },
-            '^/saveDescription': {
-                target: 'https://localhost:7060/',
-                secure: false
-            },
-            '^/taskDetail': {
-                target: 'https://localhost:7060/',
-                secure: false
-            },
-            '^/createComment': {
-                target: 'https://localhost:7060/',
-                secure: false
-            },
+            '^/projectsList': { target: 'https://localhost:7060/', secure: false },
+            '^/saveProjectName': { target: 'https://localhost:7060/', secure: false },
+            '^/projectDetail': { target: 'https://localhost:7060/', secure: false },
+            '^/createProject': { target: 'https://localhost:7060/', secure: false },
+            '^/taskDetail': { target: 'https://localhost:7060/', secure: false },
+            '^/saveTaskName': { target: 'https://localhost:7060/', secure: false },
+            '^/createTask': { target: 'https://localhost:7060/', secure: false },
+            '^/startTask': { target: 'https://localhost:7060/', secure: false },
+            '^/cancelTask': { target: 'https://localhost:7060/', secure: false },
+            '^/saveDescription': { target: 'https://localhost:7060/', secure: false },
+            '^/createComment': { target: 'https://localhost:7060/', secure: false },
         },
         port: 5173,
         https: {

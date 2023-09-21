@@ -67,15 +67,13 @@ export default class TaskTableItems extends Component<TaskTableItemsProps, TaskT
               value={this.state.itemsPerPage}
               onChange={(e) => this.handleItemsInPerPageChange(Number.parseInt(e.target.value))}
               id="sliderInput" />
-          </div>
-        
+          </div>        
         <div className="col">
           <ul id="page-numbers" className="pagination">
             {pageNumbers.map((number) => (
               <li
                 key={number}
                 id={number.toString()}
-
                 className={number === currentPage ? 'active page-item user-select-none' : 'page-item user-select-none'}
               >
                 <a className="page-link"

@@ -1,4 +1,4 @@
-﻿namespace DAL.Base;
+﻿namespace DAL.DapperAccess.Base;
 
 internal static class SQL
 {
@@ -120,7 +120,7 @@ internal static class SQL
                  FROM 
                     Projects p 
                  WHERE 
-                    t.`ProjectId` = p.`ProjectId`) as ProjectName,
+                    t.ProjectId = p.ProjectId) as ProjectName,
 	            t.CreateDate,
 	            t.UpdateDate,
 	            t.CancelDate,

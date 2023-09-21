@@ -1,17 +1,17 @@
 import { Component } from 'react';
 
-type EditableFieldComponentProps = {
+type EditableTextAreaComponentProps = {
   save: (value: string) => void;
   data: string;
 }
 
-type EditableFieldComponentState = {
+type EditableTextAreaComponentState = {
   isEditing: boolean;
   value: string;
 }
 
-export default class EditableFieldComponent extends Component<EditableFieldComponentProps, EditableFieldComponentState>{
-  constructor(props: EditableFieldComponentProps) {
+export default class EditableTextAreaComponent extends Component<EditableTextAreaComponentProps, EditableTextAreaComponentState>{
+  constructor(props: EditableTextAreaComponentProps) {
     super(props);
     this.state = { isEditing: false, value: this.props.data }
   }
@@ -20,7 +20,7 @@ export default class EditableFieldComponent extends Component<EditableFieldCompo
     this.setState({ isEditing: true });
   }
 
-  handleValueChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  handleValueChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {   
     this.setState({ value: e.target.value });
   }
 
@@ -31,7 +31,7 @@ export default class EditableFieldComponent extends Component<EditableFieldCompo
 
   render() {
     const content = this.state.isEditing ?
-      <textarea className='form-control'  value={this.state.value} onChange={this.handleValueChange} onBlur={this.handleEndEdit} /> :
+      <textarea className='form-control' rows={5}  value={this.state.value} onChange={this.handleValueChange} onBlur={this.handleEndEdit} /> :
       <span onClick={this.handleStartEdit} >
         {this.state.value}
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil ms-2" viewBox="0 0 16 16">
@@ -43,3 +43,4 @@ export default class EditableFieldComponent extends Component<EditableFieldCompo
     );
   }
 }
+
