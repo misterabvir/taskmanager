@@ -10,41 +10,39 @@ namespace TaskManager.Controllers;
 [Route("[controller]")]
 public class TasksController : ControllerBase
 {
-    private readonly IProjects projects;
     private readonly ITasks tasks;
     public TasksController(IProjects projects, ITasks tasks)
     {
-        this.projects = projects;
         this.tasks = tasks;
     }
 
-    [HttpPost]
-    [Route("/taskDetail")]
-    public async Task<TaskViewModel> GetTaskDetail(TaskDetailModel model)
+    [HttpGet]
+    [Route("/Task/Detail/{taskId}")]
+    public async Task<TaskViewModel> GetTaskDetail(Guid taskId)
     {
-        var task = await tasks.GetById(model.TaskId);
+        var task = await tasks.GetById(taskId);
         return TaskMapper.MapTaskModelToTaskViewModel(task);
     }
 
 
-    [HttpPost]
-    [Route("/startTask")]
+    [HttpPut]
+    [Route("/Task/Start")]
     public async Task<IActionResult> StartTask(ActionTaskModel model)
     {
         await tasks.Start(model.TaskId);
         return Ok();
     }
 
-    [HttpPost]
-    [Route("/cancelTask")]
+    [HttpPut]
+    [Route("/Task/Cancel")]
     public async Task<IActionResult> CancelTask(ActionTaskModel model)
     {
         await tasks.Cancel(model.TaskId);
         return Ok();
     }
 
-    [HttpPost]
-    [Route("/saveTaskName")]
+    [HttpPut]
+    [Route("/Task/UpdateName")]
     public async Task<IActionResult> SaveTask(SaveNewTaskNameModel model)
     {
         if (string.IsNullOrWhiteSpace(model.Name))
@@ -52,8 +50,8 @@ public class TasksController : ControllerBase
         await tasks.UpdateName(model.TaskId, model.Name);
         return Ok();
     }
-    [HttpPost]
-    [Route("/saveDescription")]
+    [HttpPut]
+    [Route("/Task/UpdateDescription")]
     public async Task<IActionResult> SaveTaskDescriprion(SaveTaskDescription model)
     {
         if (string.IsNullOrWhiteSpace(model.Description))
@@ -63,7 +61,7 @@ public class TasksController : ControllerBase
     }
 
     [HttpPost]
-    [Route("/createTask")]
+    [Route("/Task/Create")]
     public async Task<IActionResult> CreateTask(CreateTaskModel model)
     {
         await tasks.Create(model.TaskName!, model.ProjectId);

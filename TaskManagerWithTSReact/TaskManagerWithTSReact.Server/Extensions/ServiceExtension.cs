@@ -1,5 +1,4 @@
 ﻿using Domain;
-using Microsoft.Extensions.Configuration;
 
 namespace TaskManagerWithTSReact.Server.Extensions
 {
@@ -7,7 +6,10 @@ namespace TaskManagerWithTSReact.Server.Extensions
     {
         public static void AddProviderDb(this IServiceCollection services, ConfigurationManager configuration, ProviderDb provider)
         {
-            services.AddScoped<DAL.Base.IDbStringConnection>(provider => new DAL.Base.MySqlStringConnection(configuration.GetConnectionString(provider.ToString()!)));
+            if(provider == ProviderDb.MsSql)
+                services.AddSingleton<DAL.Base.IDbStringConnection>(provider => new DAL.Base.MsSqlStringConnection(configuration.GetConnectionString("MsSql")));
+            else if(provider == ProviderDb.MySql)
+                services.AddSingleton<DAL.Base.IDbStringConnection>(provider => new DAL.Base.MySqlStringConnection(configuration.GetConnectionString("MySql")));
         }
 
         public static void AddDAL(this IServiceCollection services)
@@ -38,9 +40,9 @@ namespace TaskManagerWithTSReact.Server.Extensions
 
         public static void AddBL(this IServiceCollection services)
         {
-            services.AddScoped<BL.IProjects, BL.Projects>();
-            services.AddScoped<BL.ITasks, BL.Tasks>();
-            services.AddScoped<BL.IComments, BL.Comments>();
+            services.AddTransient<BL.IProjects, BL.Projects>();
+            services.AddTransient<BL.ITasks, BL.Tasks>();
+            services.AddTransient<BL.IComments, BL.Comments>();
         }
     }
 }

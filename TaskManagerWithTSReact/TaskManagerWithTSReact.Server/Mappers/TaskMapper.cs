@@ -18,7 +18,10 @@ namespace TaskManagerWithTSReact.Server.Mappers
                 UpdateDate = model.UpdateDate,
                 CancelDate = model.CancelDate,
                 CreateDate = model.CreateDate,
-                Comments = model.Comments.Select(CommentMapper.MapCommentModelToCommentViewModel).ToList(),
+                Comments = model.Comments
+                    .Select(CommentMapper.MapCommentModelToCommentViewModel)
+                    .OrderByDescending(c => c.Created)
+                    .ToList(),
             };
         }
     }

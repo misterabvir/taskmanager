@@ -9,7 +9,7 @@ namespace TaskManagerWithTSReact.Server.Mappers
         {
             return new CommentViewModel()
             {
-                Id = model.CommentId,
+                CommentId = model.CommentId,
                 TaskId = model.TaskId,
                 Created = model.CreateDate,
                 Content = model.Content

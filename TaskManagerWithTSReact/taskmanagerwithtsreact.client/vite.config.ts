@@ -32,17 +32,9 @@ export default defineConfig({
     },
     server: {
         proxy: {
-            '^/projectsList': { target: 'https://localhost:7060/', secure: false },
-            '^/saveProjectName': { target: 'https://localhost:7060/', secure: false },
-            '^/projectDetail': { target: 'https://localhost:7060/', secure: false },
-            '^/createProject': { target: 'https://localhost:7060/', secure: false },
-            '^/taskDetail': { target: 'https://localhost:7060/', secure: false },
-            '^/saveTaskName': { target: 'https://localhost:7060/', secure: false },
-            '^/createTask': { target: 'https://localhost:7060/', secure: false },
-            '^/startTask': { target: 'https://localhost:7060/', secure: false },
-            '^/cancelTask': { target: 'https://localhost:7060/', secure: false },
-            '^/saveDescription': { target: 'https://localhost:7060/', secure: false },
-            '^/createComment': { target: 'https://localhost:7060/', secure: false },
+            '^/Project.*': { target: 'https://localhost:7060/', secure: false },
+            '^/Task.*': { target: 'https://localhost:7060/', secure: false },
+            '^/Comment.*': { target: 'https://localhost:7060/', secure: false }
         },
         port: 5173,
         https: {

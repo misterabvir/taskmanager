@@ -20,7 +20,7 @@ namespace TaskManager.Controllers
 
 
         [HttpGet]
-        [Route("/projectsList")]
+        [Route("/Project/GetAll")]
         public async Task<IEnumerable<ProjectViewModel>> GetProjectsList()
         {
             var projectList = await projects.GetAll();
@@ -29,7 +29,7 @@ namespace TaskManager.Controllers
 
 
         [HttpPost]
-        [Route("/createProject")]
+        [Route("/Project/Create")]
         public async Task<IActionResult> CreateNewProject(CreateProjectModel model)
         {
             if (string.IsNullOrEmpty(model.ProjectName))
@@ -38,16 +38,16 @@ namespace TaskManager.Controllers
             return Ok();
         }
 
-        [HttpPost]
-        [Route("/projectDetail")]
-        public async Task<ProjectViewModel> GetProjectDetail(ProjectDetailModel model)
+        [HttpGet]
+        [Route("/Project/Detail/{projectId}")]
+        public async Task<ProjectViewModel> GetProjectDetail(Guid projectId)
         {
-            var project = await projects.GetById(model.ProjectId);
+            var project = await projects.GetById(projectId);
             return ProjectsMapper.MapProjectModelToProjectViewModel(project);
         }
 
-        [HttpPost]
-        [Route("/saveProjectName")]
+        [HttpPut]
+        [Route("/Project/UpdateName")]
         public async Task<IActionResult> SaveProject(SaveNewProjectNameModel model)
         {
             if (string.IsNullOrWhiteSpace(model.Name))

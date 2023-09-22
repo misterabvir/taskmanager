@@ -1,4 +1,4 @@
--- Active: 1695287194983@@127.0.0.1@1433@TaskManagerDb
+
 USE TaskManagerDb;
 DROP TABLE IF EXISTS Comments;
 CREATE TABLE Comments(
@@ -6,13 +6,10 @@ CREATE TABLE Comments(
 	TaskId CHAR(36),
 	CreateDate DATETIME,
 	Content TEXT
-
 );
 
 ALTER TABLE Comments
    ADD CONSTRAINT FK_TaskId FOREIGN KEY (TaskId)
       REFERENCES Tasks (TaskId)
       ON DELETE CASCADE
-      ON UPDATE CASCADE
-;
-	
+      ON UPDATE CASCADE;

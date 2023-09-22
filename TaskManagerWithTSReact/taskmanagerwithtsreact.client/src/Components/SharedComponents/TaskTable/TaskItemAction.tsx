@@ -1,6 +1,6 @@
 import { Component } from 'react';
-import { PostRequest } from '../../FetchServer/FetchServer';
-import { CANCEL_TASK, START_TASK } from '../../../Utils/Const';
+import { Put } from '../../RequestsToServer/Requests';
+import { TASK_CANCEL, TASK_START } from '../../../Utils/Const';
 
 type TaskItemActionProps = {
   status: string;
@@ -15,12 +15,12 @@ export default class TaskItemAction extends Component<TaskItemActionProps> {
 
   
   handleTaskCanceled = async () => {
-    await PostRequest(CANCEL_TASK, { TaskId: this.props.taskId });
+    await Put(TASK_CANCEL, { TaskId: this.props.taskId });
     await this.props.reload();
   }
 
   handleTaskStarted = async () => {
-    await PostRequest(START_TASK, { TaskId: this.props.taskId });
+    await Put(TASK_START, { TaskId: this.props.taskId });
     await this.props.reload();
   }
 
