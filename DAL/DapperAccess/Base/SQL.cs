@@ -138,6 +138,20 @@ internal static class SQL
 
     internal static class Comments
     {
+        public static string GetById => @"
+            SELECT * 
+            FROM Comments
+            WHERE CommentId=@CommentId;";
+
+        public static string Update => @"
+            UPDATE Comments
+            SET Content=@Content
+            WHERE CommentId=@CommentId;";
+
+        public static string Delete => @"
+            DELETE FROM Comments
+            WHERE CommentId=@CommentId;";
+
         public static string Create =>
             @"INSERT INTO 
                 Comments(
@@ -154,17 +168,6 @@ internal static class SQL
                 Tasks 
               SET 
                 UpdateDate=@CreateDate 
-              WHERE TaskId=@TaskId;
-			  UPDATE 
-                Projects 
-              SET 
-                UpdateDate=@CreateDate 
-              WHERE ProjectId = 
-                (SELECT 
-                    ProjectId 
-                 FROM 
-                    Tasks 
-                 WHERE 
-                    TaskId=@TaskId);";
+              WHERE TaskId=@TaskId;";
     }
 }

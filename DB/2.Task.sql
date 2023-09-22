@@ -1,4 +1,3 @@
--- Active: 1695287194983@@127.0.0.1@1433@TaskManagerDb
 
 USE TaskManagerDb;
 DROP TABLE IF EXISTS Tasks;
@@ -13,10 +12,8 @@ CREATE TABLE Tasks(
 	UpdateDate DateTime
 );
 
-
 ALTER TABLE Tasks
    ADD CONSTRAINT FK_ProjectId FOREIGN KEY (ProjectId)
       REFERENCES Projects (ProjectId)
       ON DELETE CASCADE
-      ON UPDATE CASCADE
-;
+      ON UPDATE CASCADE;

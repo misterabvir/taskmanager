@@ -2,8 +2,8 @@ import { Component } from 'react';
 import { TaskViewModel } from "../../../ViewModels/TaskViewModel";
 import EditableTextAreaComponent from '../EditableTextAreaComponent';
 import TaskItemAction from './TaskItemAction';
-import { PostRequest } from '../../FetchServer/FetchServer';
-import { SAVE_TASK_DESCRIPTION } from '../../../Utils/Const';
+import { Put } from '../../RequestsToServer/Requests';
+import { PAGE_PROJECT_DETAIL, PAGE_TASK_DETAIL, TASK_UPDATE_DESCRIPTION } from '../../../Utils/Const';
 
 type TaskTableItemsProps = {
   task: TaskViewModel,
@@ -17,20 +17,18 @@ export default class TaskItem extends Component<TaskTableItemsProps>{
   }
 
   async handleTaskDescriptionChanged(taskDescription: string, taskId: string) {
-    await PostRequest(SAVE_TASK_DESCRIPTION, { TaskId: taskId, Description: taskDescription });
+    await Put(TASK_UPDATE_DESCRIPTION, { TaskId: taskId, Description: taskDescription });
   }
 
   render() {
     const task = this.props.task;
     const index = this.props.index + 1;
-    const linkProject = "/project-detail/" + task.projectId;
-    const linkTask = "/task-detail/" + task.taskId;
     return (
       <tr>
         <td>{index}</td>
         <td className='small'>
           <span className='small'>
-            Project: <cite> <a className='text-dark badge-pill' href={linkProject}>{task.projectName}</a></cite>
+            Project: <cite> <a className='text-dark badge-pill' href={`${PAGE_PROJECT_DETAIL}/${task.projectId}`}>{task.projectName}</a></cite>
           </span>
           <br />
           <span className='small'>
@@ -46,7 +44,7 @@ export default class TaskItem extends Component<TaskTableItemsProps>{
             <div className="card-header ">
               <div className="row">
                 <div className="col h4 d-flex">
-                  <a className='btn-link' href={linkTask}>{task.taskName}</a>
+                  <a className='btn-link' href={`${PAGE_TASK_DETAIL}/${task.taskId}`}>{task.taskName}</a>
                 </div>
                 <div className='col-auto'>{task.state}</div>
               </div>

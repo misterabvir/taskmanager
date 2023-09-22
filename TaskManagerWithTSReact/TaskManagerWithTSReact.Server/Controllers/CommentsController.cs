@@ -15,13 +15,32 @@ namespace TaskManager.Controllers
         }
 
         [HttpPost]
-        [Route("/createComment")]
+        [Route("/Comment/Create")]
         public async Task<IActionResult> CreateComment(CreateCommentModel model)
         {
             if (string.IsNullOrEmpty(model.Content)) 
                 return BadRequest();
             
             await comments.Create(model.TaskId, model.Content);
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("/Comment/Update")]
+        public async Task<IActionResult> SaveComment(SaveCommentModel model)
+        {
+            if (string.IsNullOrEmpty(model.Content))
+                return BadRequest();
+            await comments.Update(model.CommentId, model.Content);
+            return Ok();
+        }
+
+
+        [HttpDelete]
+        [Route("/Comment/Delete")]
+        public async Task<IActionResult> DeleteComment(DeleteCommentModel model)
+        {
+            await comments.Delete(model.CommentId);
             return Ok();
         }
     }

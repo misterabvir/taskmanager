@@ -32,6 +32,11 @@ public static class DateTimeExtension
         return result;
     }
 
+    public static string HowLongAgo(this DateTime? start, DateTime? end)
+    {
+        return $"{start.HowLong(end)} ago.";
+    }
+
     public static string GetFormatString(this DateTime? dateTime)
     {
         if (dateTime == null) return EMPTYFORMAT;
